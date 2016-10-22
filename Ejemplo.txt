@@ -1,0 +1,7 @@
+filename "melodia"
+author "Esteban"
+instrument 43
+song:
+G(3,1) A(3,1/2) E(4,1/2)[1]
+D(4,2) A(3,8)[2]
+structure {1(90,70), 2(120,70), 1(90,80), 1(100,120), 2(80,127)}
