@@ -4,20 +4,16 @@
 # A lexer for ANSI C.
 # ----------------------------------------------------------------------
 
-import sys
+import sys,os
 
 sys.path.insert(0, "../..")
 
 import ply.lex as lex
 
-class LexerError(Exception): pass
-
-reserved = (
+tokens = (
     #Palabras Reservadas
-    'FILENAME', 'AUTHOR', 'INSTRUMENT', 'SONG', 'STRUCTURE', 'IMPROVISATION'
-)
+    'FILENAME', 'AUTHOR', 'INSTRUMENT', 'SONG', 'STRUCTURE', 'IMPROVISATION',
 
-tokens = reserved + (
     #Literales integer constant, string constant,fraction constant, notes constants, degrees constants, key constants
     'ICONST','SCONST','FCONST','NCONST','DCONST','KCONST',
 
@@ -73,7 +69,7 @@ t_FCONST = r'1/[24816]'
 t_DCONST = r'[1234567][MmAd]'
 
 # Key literal
-t_KCONST = r'(CM|Am|FM|Dm|GM|Em|BMb|Gm|DM|Bm|EMb|Cm|AM|Fm\#|AMb|Fm|EM|Cm\#|DMb|Bmb|BM|Gm\#|GMb|Emb|FM\#|Dm\#|CMb|Amb|CM\#|Am\#)'
+t_KCONST = r'CM|Am|FM|Dm|GM|Em|BMb|Gm|DM|Bm|EMb|Cm|AM|Fm\#|AMb|Fm|EM|Cm\#|DMb|Bmb|BM|Gm\#|GMb|Emb|FM\#|Dm\#|CMb|Amb|CM\#|Am\#'
 
 # Note literal
 t_NCONST = r'[ABCDEFG]'
@@ -91,15 +87,19 @@ def t_preprocessor(t):
 
 
 def t_error(t):
-    raise LexerError("Illegal character at line " + str(t.lineno))
+    print("Illegal character at line: " + str(t.lineno))
+    efile.close()
+    os.remove('Salida.txt')
 
 
 lexer = lex.lex()
-file = open('Ejemplo2.txt')
+file = open('Ejemplo.txt')
+efile = open('Salida.txt','w+')
 input = file.readlines()
 for line in input:
     lexer.input(line)
     token = lexer.token()
     while token:
-        print(token)
+        res = str(token).replace('LexToken','')
+        print(res,file = efile)
         token = lexer.token()
