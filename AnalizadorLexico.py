@@ -1,7 +1,7 @@
 # ----------------------------------------------------------------------
-# clex.py
+# Autores: Esteban Quiros y Yohel Muñoz
 #
-# A lexer for ANSI C.
+# Analizador Lexico compilador de generador de archivos midi
 # ----------------------------------------------------------------------
 
 import sys,os
