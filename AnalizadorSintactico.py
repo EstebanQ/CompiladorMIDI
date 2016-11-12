@@ -4,7 +4,7 @@
 # Analizador Lexico compilador de generador de archivos midi
 # ----------------------------------------------------------------------
 
-import AnalizadorLexico,ply.yacc as yacc
+import AnalizadorLexico ,ply.yacc as yacc, sys
 
 from AnalizadorLexico import tokens
 
@@ -96,12 +96,17 @@ def p_error(p):
     print("Syntax error in input!")
     print(p)
 
-parser = yacc.yacc(method='LALR')
-
-file = open('Ejemplo.txt')
-efile = open('Salida.txt','w+')
-s = ""
-for line in file.readlines():
-    s += line
-result = parser.parse(s)
-print(result)
+if len(sys.argv) > 1:
+    parser = yacc.yacc(method='LALR')
+    entrada = sys.argv[1]
+    file = open(entrada)
+    if len(sys.argv) > 2:
+        salida = sys.argv[2]
+        efile = open(salida, 'w+')
+    else:
+        efile = open('Salida.txt', 'w+')
+    s = ""
+    for line in file.readlines():
+        s += line
+    result = parser.parse(s)
+    print(result)

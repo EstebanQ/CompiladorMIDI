@@ -92,14 +92,20 @@ def t_error(t):
     os.remove('Salida.txt')
 
 
-lexer = lex.lex()
-file = open('Ejemplo.txt')
-efile = open('Salida.txt','w+')
-input = file.readlines()
-for line in input:
-    lexer.input(line)
-    token = lexer.token()
-    while token:
-        res = str(token).replace('LexToken','')
-        print(res,file = efile)
+if len(sys.argv) > 1:
+    lexer = lex.lex()
+    entrada = sys.argv[1]
+    file = open(entrada)
+    if len(sys.argv) > 2:
+        salida = sys.argv[2]
+        efile = open(salida, 'w+')
+    else:
+        efile = open('Salida.txt', 'w+')
+    input = file.readlines()
+    for line in input:
+        lexer.input(line)
         token = lexer.token()
+        while token:
+            res = str(token).replace('LexToken','')
+            print(res,file = efile)
+            token = lexer.token()
