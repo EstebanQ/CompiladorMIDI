@@ -37,7 +37,9 @@ def midi():
 
 root = tki.Tk()
 
+root.iconbitmap("icon.ico")
 root.state("zoomed")
+root.title("MIDI Compiler")
 
 filename = ""
 
