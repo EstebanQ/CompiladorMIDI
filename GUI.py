@@ -1,10 +1,5 @@
-import tkinter as tki
+import tkinter as tki,AnalizadorLexico,AnalizadorSintactico
 from tkinter import filedialog
-
-def donothing():
-     filewin = tki.Toplevel(root)
-     button = tki.Button(filewin, text="Do nothing button")
-     button.pack()
 
 def new():
     txt.delete('1.0',"end-1c")
@@ -35,7 +30,14 @@ def saveas():
     global filename
     filename = filen
 
+def midi():
+    filewin = tki.Toplevel(root)
+    button = tki.Button(filewin, text="Do nothing button")
+    button.pack()
+
 root = tki.Tk()
+
+root.state("zoomed")
 
 filename = ""
 
@@ -62,7 +64,7 @@ filemenu.add_command(label="Save as...", command=saveas)
 
 filemenu.add_separator()
 
-filemenu.add_command(label="Generate MIDI", command=donothing)
+filemenu.add_command(label="Generate MIDI", command=midi)
 
 filemenu.add_separator()
 
