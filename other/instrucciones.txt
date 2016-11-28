@@ -1,0 +1,4 @@
+notas: a b c d e f / A B C D E F (como quiera el usuario, puede tener # o b, la nota que sea, cualquier combinación)
+tonalidad: nota seguida de m (devuelva minor) o seguida de M (devuelva Major) [si importan mayúsculas o minúsculas, solo las tonalidades que yo le había pasado antes son aceptables]
+grados: 1 2 3 4 5 6 7 seguido de m, M, A, d (si importan mayúsculas o minúsculas)
+
