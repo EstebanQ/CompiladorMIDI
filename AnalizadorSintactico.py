@@ -4,9 +4,11 @@
 # Analizador Sintactico compilador de generador de archivos midi
 # ----------------------------------------------------------------------
 
-import AnalizadorLexico ,ply.yacc as yacc, sys
+import ply.yacc as yacc, sys
 
 from AnalizadorLexico import tokens
+
+error = ""
 
 #Estructura principal del archivo
 def p_principal(t):
@@ -107,20 +109,15 @@ def p_repeatValues(t):
     pass
 
 def p_error(p):
-    print("Syntax error in input!")
-    print(p)
+    global error
+    error = " Sintactical Error: Illegal expression '%s'" % p.value
 
-if len(sys.argv) > 1:
+def analisisSintactico(input):
+    global error
+    error = ""
     parser = yacc.yacc(method='LALR')
-    entrada = sys.argv[1]
-    file = open(entrada)
-    if len(sys.argv) > 2:
-        salida = sys.argv[2]
-        efile = open(salida, 'w+')
-    else:
-        efile = open('Salida.txt', 'w+')
-    s = ""
-    for line in file.readlines():
-        s += line
-    result = parser.parse(s)
-    print(result)
+    try:
+        parser.parse(input)
+    except:
+        pass
+    return error

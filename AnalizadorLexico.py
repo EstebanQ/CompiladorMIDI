@@ -4,11 +4,13 @@
 # Analizador Lexico compilador de generador de archivos midi
 # ----------------------------------------------------------------------
 
-import sys,os
+import sys
 
 sys.path.insert(0, "../..")
 
 import ply.lex as lex
+
+error = ""
 
 tokens = (
     #Palabras Reservadas
@@ -72,7 +74,7 @@ t_DCONST = r'[1234567][MmAd]'
 t_KCONST = r'CM|Am|FM|Dm|GM|Em|BMb|Gm|DM|Bm|EMb|Cm|AM|Fm\#|AMb|Fm|EM|Cm\#|DMb|Bmb|BM|Gm\#|GMb|Emb|FM\#|Dm\#|CMb|Amb|CM\#|Am\#'
 
 # Note literal
-t_NCONST = r'[ABCDEFG]'
+t_NCONST = r'[ABCDEFG][b#]*'
 
 # Comments
 def t_comment(t):
@@ -87,25 +89,23 @@ def t_preprocessor(t):
 
 
 def t_error(t):
-    print("Illegal character at line: " + str(t.lineno))
-    efile.close()
-    os.remove('Salida.txt')
+    global error
+    error = " Lexical Error: Illegal character at line " + str(t.lineno)
 
 
-if len(sys.argv) > 1:
+def analisisLexico(input):
+    global error
+    error = ""
     lexer = lex.lex()
-    entrada = sys.argv[1]
-    file = open(entrada)
-    if len(sys.argv) > 2:
-        salida = sys.argv[2]
-        efile = open(salida, 'w+')
-    else:
-        efile = open('Salida.txt', 'w+')
-    input = file.readlines()
-    for line in input:
-        lexer.input(line)
+    lexer.input(input)
+    try:
         token = lexer.token()
-        while token:
-            res = str(token).replace('LexToken','')
-            print(res,file = efile)
+    except:
+        pass
+    while token:
+        try:
             token = lexer.token()
+        except:
+            pass
+            break
+    return error
