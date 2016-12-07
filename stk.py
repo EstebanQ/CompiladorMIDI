@@ -180,7 +180,7 @@ def tonalidad(key):
         tipoTonalidad = "minor"
     return tipoTonalidad
 
-def improvisation(key, grade1, grade2):
+def improvisation(key, grade1, grade2,mf):
     grados = [grade1,grade2]
     tipoTonalidad = tonalidad(key)
     #if (key == "CMajor"):
@@ -211,23 +211,23 @@ def improvisation(key, grade1, grade2):
         grades =[2,3,4,5,6,7]
         grades.remove(grade2)
         first = random.choice(grades)
-        improvisation(key,first,grade2)
+        improvisation(key,first,grade2,mf)
     elif (grade1 != 1 & grade2 == 1):
         grades = [2, 3, 4, 5, 6, 7]
         grades.remove(grade1)
         second = random.choice(grades)
-        improvisation(key, grade1, second)
+        improvisation(key, grade1, second,mf)
     elif (grade1 == 1 & grade2 == 1):
         grades = [2, 3, 4, 5, 6, 7]
         first = random.choice(grades)
         grades.remove(first)
         second = random.choice(grades)
-        improvisation(key, first, second)
+        improvisation(key, first, second,mf)
 
-    llenar(arrNotas,arrRitmos,arrDuraciones)
+    llenar(arrNotas,arrRitmos,arrDuraciones,mf)
     return
 
-def llenar(arrNotas,arrRitmos,arrDuraciones):
+def llenar(arrNotas,arrRitmos,arrDuraciones,mf):
     channel = 0
     volume = 100
     track = 0   # the only track
@@ -458,10 +458,13 @@ arrNotas = []
 arrRitmos = []
 arrDuraciones = []
 
-def song(notas,ritmos,registros): # recibe un arreglo de notas y un arreglo de ritmos
+def song(notas,ritmos,registros,mf): # recibe un arreglo de notas y un arreglo de ritmos
     index = 0
     time = 0
     duration = 0
+    track = 0  # the only track
+    mf.addTrackName(track, time, "Sample Track")
+    mf.addTempo(track, time, 180)
     octava(notas,registros)
     for nota in notas:
         channel = 0
@@ -487,10 +490,10 @@ def song(notas,ritmos,registros): # recibe un arreglo de notas y un arreglo de r
 #song(starWarsNotas,starWarsRitmos,starWarsOctavas)
 
 
-def main():
+def funcion():
     # create your MIDI object
     mf = MIDIFile(1)  # only 1 track
-    improvisation("ASusminor",3,7)
+    improvisation("ASusminor",3,7,mf)
 
     # write it to disk
     with open("output.mid", 'wb') as outf:
