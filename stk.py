@@ -72,6 +72,8 @@ sig7 = [1,2,4,5,6]
 
 progresion = []
 
+mf = MIDIFile(1)  # only 1 track
+
 def siguientes(grade):
     if (grade == 1):
         sig = sig1
@@ -180,7 +182,7 @@ def tonalidad(key):
         tipoTonalidad = "minor"
     return tipoTonalidad
 
-def improvisation(key, grade1, grade2,mf):
+def improvisation(key, grade1, grade2):
     grados = [grade1,grade2]
     tipoTonalidad = tonalidad(key)
     #if (key == "CMajor"):
@@ -211,23 +213,23 @@ def improvisation(key, grade1, grade2,mf):
         grades =[2,3,4,5,6,7]
         grades.remove(grade2)
         first = random.choice(grades)
-        improvisation(key,first,grade2,mf)
+        improvisation(key,first,grade2)
     elif (grade1 != 1 & grade2 == 1):
         grades = [2, 3, 4, 5, 6, 7]
         grades.remove(grade1)
         second = random.choice(grades)
-        improvisation(key, grade1, second,mf)
+        improvisation(key, grade1, second)
     elif (grade1 == 1 & grade2 == 1):
         grades = [2, 3, 4, 5, 6, 7]
         first = random.choice(grades)
         grades.remove(first)
         second = random.choice(grades)
-        improvisation(key, first, second,mf)
+        improvisation(key, first, second)
 
-    llenar(arrNotas,arrRitmos,arrDuraciones,mf)
+    llenar(arrNotas,arrRitmos,arrDuraciones)
     return
 
-def llenar(arrNotas,arrRitmos,arrDuraciones,mf):
+def llenar(arrNotas,arrRitmos,arrDuraciones):
     channel = 0
     volume = 100
     track = 0   # the only track
@@ -458,7 +460,7 @@ arrNotas = []
 arrRitmos = []
 arrDuraciones = []
 
-def song(notas,ritmos,registros,mf): # recibe un arreglo de notas y un arreglo de ritmos
+def song(notas,ritmos,registros): # recibe un arreglo de notas y un arreglo de ritmos
     index = 0
     time = 0
     duration = 0
@@ -491,9 +493,7 @@ def song(notas,ritmos,registros,mf): # recibe un arreglo de notas y un arreglo d
 
 
 def funcion():
-    # create your MIDI object
-    mf = MIDIFile(1)  # only 1 track
-    improvisation("ASusminor",3,7,mf)
+    improvisation("ASusminor",3,7)
 
     # write it to disk
     with open("output.mid", 'wb') as outf:
