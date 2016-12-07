@@ -1,5 +1,6 @@
 from midiutil.MidiFile import MIDIFile
-import random
+
+import random,AnalizadorSintactico as As
 
 # NOTAS
 aBem = 56 #Bem = bemol
@@ -493,7 +494,20 @@ def song(notas,ritmos,registros): # recibe un arreglo de notas y un arreglo de r
 
 
 def funcion():
-    improvisation("ASusminor",3,7)
+    if As.tipo == "song":
+        print(As.instrumento)
+        print(As.notas)
+        print(As.octavas)
+        print(As.ritmos)
+        print(As.estructura1)
+        print(As.estructura2)
+        print(As.estructura3)
+        #improvisation("ASusminor",3,7)
+    else:
+        print(As.tonalidad)
+        print(As.grados)
+        print(As.valores)
+        #improvisation("ASusminor", 3, 7)
 
     # write it to disk
     with open("output.mid", 'wb') as outf:

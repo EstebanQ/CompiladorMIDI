@@ -65,7 +65,7 @@ t_ICONST = r'\d+'
 t_SCONST = r'\"([^\\\n]|(\\.))*?\"'
 
 # Fraction literal
-t_FCONST = r'1/[24816]'
+t_FCONST = r'1/[24]'
 
 # Degrees literal
 t_DCONST = r'[1234567][MmAd]'

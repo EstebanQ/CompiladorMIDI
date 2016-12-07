@@ -54,8 +54,8 @@ def midi():
     txt2.delete('1.0',tki.END)
     txt2.insert("end-1c",AnalizadorLexico.analisisLexico(txt.get('1.0',"end-1c")))
     txt2.insert("end-1c", AnalizadorSintactico.analisisSintactico(txt.get('1.0', "end-1c")))
-    stk.funcion()
     if len(txt2.get('1.0',"end-1c")) == 0:
+        stk.funcion()
         txt2.insert("end-1c", "MIDI Completed")
     txt2.config(state=tki.DISABLED)
 
