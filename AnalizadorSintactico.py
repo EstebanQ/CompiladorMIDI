@@ -171,9 +171,9 @@ def p_repeat2(t):
 #Valor a repetir
 def p_repeatValues(t):
     'repeatValues : ICONST LPAREN ICONST COMMA ICONST RPAREN'
-    estructura1.append(t[1])
-    estructura2.append(t[3])
-    estructura3.append(t[5])
+    estructura1.append(int(t[1]))
+    estructura2.append(int(t[3]))
+    estructura3.append(int(t[5]))
 
 def p_error(p):
     global error

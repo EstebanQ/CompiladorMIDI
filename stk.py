@@ -75,6 +75,16 @@ progresion = []
 
 mf = MIDIFile(1)  # only 1 track
 
+arregloNotas = []
+
+arregloOctavas = []
+
+arregloRitmos = []
+
+arregloVelocidades = []
+
+arregloVolumenes = []
+
 def siguientes(grade):
     if (grade == 1):
         sig = sig1
@@ -495,6 +505,29 @@ def song(notas,ritmos,registros): # recibe un arreglo de notas y un arreglo de r
 
 def funcion():
     if As.tipo == "song":
+        #Se acomodan todos los valores en un solo arreglo de cada tipo(arreglo de notas, octavas, ritmos, etc.)
+        posiciones = [0]
+        x = 0
+        for y in As.notas:
+            if y == '-':
+                posiciones.append(x+1)
+            x += 1
+
+        x = 0
+        for y in As.estructura1:
+            for i in range(posiciones[y-1],posiciones[y]-1):
+                arregloNotas.append(As.notas[i])
+                arregloOctavas.append(As.octavas[i])
+                arregloRitmos.append(As.ritmos[i])
+                arregloVelocidades.append(As.estructura2[x])
+                arregloVolumenes.append(As.estructura3[x])
+            x += 1
+
+        print(arregloNotas)
+        print(arregloOctavas)
+        print(arregloRitmos)
+        print(arregloVelocidades)
+        print(arregloVolumenes)
         print(As.instrumento)
         print(As.notas)
         print(As.octavas)
