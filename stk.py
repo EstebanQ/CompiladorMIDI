@@ -85,6 +85,10 @@ arregloVelocidades = []
 
 arregloVolumenes = []
 
+arregloGrados = []
+
+arregloValores = []
+
 def siguientes(grade):
     if (grade == 1):
         sig = sig1
@@ -504,6 +508,22 @@ def song(notas,ritmos,registros): # recibe un arreglo de notas y un arreglo de r
 
 
 def funcion():
+
+    global arregloNotas
+    arregloNotas = []
+    global arregloOctavas
+    arregloOctavas = []
+    global arregloRitmos
+    arregloRitmos = []
+    global arregloVelocidades
+    arregloVelocidades = []
+    global arregloVolumenes
+    arregloVolumenes = []
+    global arregloGrados
+    arregloGrados = []
+    global arregloValores
+    arregloValores = []
+
     if As.tipo == "song":
         #Se acomodan todos los valores en un solo arreglo de cada tipo(arreglo de notas, octavas, ritmos, etc.)
         posiciones = [0]
@@ -537,9 +557,33 @@ def funcion():
         print(As.estructura3)
         #improvisation("ASusminor",3,7)
     else:
+        # Se acomodan todos los valores en un solo arreglo de cada tipo(arreglo de notas, octavas, ritmos, etc.)
+        posiciones = [0]
+        x = 0
+        for y in As.grados:
+            if y == '-':
+                posiciones.append(x + 1)
+            x += 1
+
+        x = 0
+        for y in As.estructura1:
+            for i in range(posiciones[y - 1], posiciones[y] - 1):
+                arregloGrados.append(As.grados[i])
+                arregloValores.append(As.valores[i])
+                arregloVelocidades.append(As.estructura2[x])
+                arregloVolumenes.append(As.estructura3[x])
+            x += 1
+
+        print(arregloGrados)
+        print(arregloValores)
+        print(arregloVelocidades)
+        print(arregloVolumenes)
         print(As.tonalidad)
         print(As.grados)
         print(As.valores)
+        print(As.estructura1)
+        print(As.estructura2)
+        print(As.estructura3)
         #improvisation("ASusminor", 3, 7)
 
     # write it to disk

@@ -180,8 +180,27 @@ def p_error(p):
     error = " Sintactical Error: Illegal expression '%s'" % p.value
 
 def analisisSintactico(input):
+
     global error
     error = ""
+    global notas
+    notas = []
+    global ritmos
+    ritmos = []
+    global octavas
+    octavas = []
+    global grados
+    grados = []
+    global valores
+    valores = []
+    global estructura1
+    estructura1 = []
+    global estructura2
+    estructura2 = []
+    global estructura3
+    estructura3 = []
+
+
     parser = yacc.yacc(method='LALR')
     try:
         parser.parse(input)
