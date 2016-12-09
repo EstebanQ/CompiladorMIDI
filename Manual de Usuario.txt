@@ -1,0 +1,9 @@
+Manual de Usuario Compilador Midi Esteban Quirós y Yohel Muñoz
+
+Interfaz Grafica:
+
+El compilador viene con una interfaz grafica que tiene seis funcionalidades. New permite crear un archivo vacio. Save permite guardar las modificaciones a un archivo preexistente. Save as permite guardar un archivo en una ruta y
+con un nombre en particular. Open permite abrir un archivo. Generate Midi le aplica el proceso de analisis lexico y sintactico al texto y ademas genera el archivo midi respectivo. Exit permite salir de la aplicacion. La interfaz
+esta compuesta de dos campos. Uno permite ver y editar el texto. Otro funciona como una consola no editable donde aparecen mensajes relacionados a errores de analisis o a la generacion del archivo. Un error encontrado es que la
+terminal podria no aparecer en todas las computadoras por problemas de tkinter(libreria utilizada para desarrollar la interfaz, viene incluida con python). No se encontro informacion del error y por lo tanto no se pudo solucionar.
+Para el manejo de los archivos midi se utilizo midiutil(http://www.emergentmusics.org/midiutil).

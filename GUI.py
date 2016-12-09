@@ -6,6 +6,7 @@
 
 import tkinter as tki,AnalizadorLexico,AnalizadorSintactico,stk
 from tkinter import filedialog
+from tkinter import messagebox
 
 #Metodo que genera un nuevo archivo
 def new():
@@ -50,17 +51,19 @@ def saveas():
 
 #Metodo que genera el archivo MIDI
 def midi():
-    txt2.config(state=tki.NORMAL)
-    txt2.delete('1.0',tki.END)
-    txt2.insert("end-1c",AnalizadorLexico.analisisLexico(txt.get('1.0',"end-1c")))
-    txt2.insert("end-1c", AnalizadorSintactico.analisisSintactico(txt.get('1.0', "end-1c")))
-    if len(txt2.get('1.0',"end-1c")) == 0:
-        stk.funcion()
-        filen = filedialog.asksaveasfilename(initialfile = stk.titulo,filetypes = [("Midi files", "*.mid")],defaultextension = '.mid')
-        with open(filen, 'w+') as outf:
-            stk.mf.writeFile(outf)
-        txt2.insert("end-1c", "MIDI Completed")
-    txt2.config(state=tki.DISABLED)
+    if txt.get('1.0',"end-1c") == "":
+        tki.messagebox._show("Error","Cannot generate Midi from empty file.")
+
+    else:
+        txt2.config(state=tki.NORMAL)
+        txt2.delete('1.0',tki.END)
+        txt2.insert("end-1c",AnalizadorLexico.analisisLexico(txt.get('1.0',"end-1c")))
+        txt2.insert("end-1c", AnalizadorSintactico.analisisSintactico(txt.get('1.0', "end-1c")))
+        if len(txt2.get('1.0',"end-1c")) == 0:
+            filen = filedialog.asksaveasfilename(initialfile = AnalizadorSintactico.titulo,filetypes = [("Midi files", "*.mid")],defaultextension = '.mid')
+            stk.funcion(filen)
+            txt2.insert("end-1c", "MIDI Completed")
+        txt2.config(state=tki.DISABLED)
 
 root = tki.Tk()
 
@@ -80,7 +83,7 @@ txt = tki.Text(txt_frm, borderwidth=3, relief="sunken")
 txt.config(font=("consolas", 12), undo=True, wrap='word')
 txt.grid(row=0, column=0, sticky="nsew", padx=2, pady=2)
 
-txt_frm2 = tki.Frame(root, width=50, height=20)
+txt_frm2 = tki.Frame(root)
 txt_frm2.pack(fill="both", expand=True)
 txt_frm2.grid_propagate(False)
 txt_frm2.grid_rowconfigure(0, weight=1)

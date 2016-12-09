@@ -26,8 +26,6 @@ octavas = []
 
 grados = []
 
-valores = []
-
 estructura1 = []
 
 estructura2 = []
@@ -158,10 +156,9 @@ def p_degrees2(t):
 
 #Grado musical
 def p_degree(t):
-    'degree : DCONST LPAREN ICONST RPAREN'
+    'degree : DCONST'
     degree = t[1]
     grados.append(int(degree[0]))
-    valores.append(int(t[3]))
 
 #Estructura
 def p_structure(t):

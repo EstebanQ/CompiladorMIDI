@@ -570,8 +570,8 @@ track = 0
 count = 0
 titulo = ""
 
-def funcion():
-    global indice,count,titulo,arregloNotas,arregloOctavas,arregloRitmos,arregloVelocidades,arregloVolumenes,arregloGrados,arregloValores
+def funcion(filen):
+    global indice,count,titulo,arregloNotas,arregloOctavas,arregloRitmos,arregloVelocidades,arregloVolumenes,arregloGrados,mf
     indice = 0
     count = 0
     titulo = As.titulo
@@ -581,7 +581,8 @@ def funcion():
     arregloVelocidades = []
     arregloVolumenes = []
     arregloGrados = []
-    arregloValores = []
+
+    mf = MIDIFile(1)
 
     if As.tipo == "song":
         #Se acomodan todos los valores en un solo arreglo de cada tipo(arreglo de notas, octavas, ritmos, etc.)
@@ -602,7 +603,13 @@ def funcion():
                 arregloVolumenes.append(As.estructura3[x])
             x += 1
 
+        mf.addTrackName(track, count, "Sample Track")
+
         song(arregloNotas,arregloRitmos,arregloOctavas)
+
+        print(arregloNotas)
+        with open(filen, 'wb') as outf:
+            mf.writeFile(outf)
 
     else:
         # Se acomodan todos los valores en un solo arreglo de cada tipo(arreglo de notas, octavas, ritmos, etc.)
@@ -617,7 +624,6 @@ def funcion():
         for y in As.estructura1:
             for i in range(posiciones[y - 1], posiciones[y] - 1):
                 arregloGrados.append(As.grados[i])
-                arregloValores.append(As.valores[i])
                 arregloVelocidades.append(As.estructura2[x])
                 arregloVolumenes.append(As.estructura3[x])
             x += 1
@@ -627,3 +633,6 @@ def funcion():
         for i in range(0,len(arregloGrados),2):
             indice = i
             improvisation(As.tonalidad,arregloGrados[i],arregloGrados[i+1])
+
+        with open(filen, 'wb') as outf:
+            mf.writeFile(outf)
