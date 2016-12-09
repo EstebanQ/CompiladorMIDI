@@ -14,6 +14,8 @@ instrumento = 0
 
 tipo = ""
 
+titulo = ""
+
 tonalidad = ""
 
 notas = []
@@ -35,13 +37,21 @@ estructura3 = []
 #Estructura principal del archivo
 def p_principal(t):
     'principal : FILENAME SCONST AUTHOR SCONST INSTRUMENT ICONST song structure'
-    global instrumento
+    global instrumento,titulo
     instrumento = t[6]
+    titulo = t[2]
+    titulo += "By"
+    titulo += t[4]
+    titulo = titulo.replace("\"", "")
 
 def p_principal2(t):
     'principal : FILENAME SCONST AUTHOR SCONST INSTRUMENT ICONST improv structure'
-    global instrumento
-    instrumento = t[int(6)]
+    global instrumento,titulo
+    instrumento = t[6]
+    titulo = t[2]
+    titulo += "By"
+    titulo += t[4]
+    titulo = titulo.replace("\"", "")
 
 #Estructura de una cancion (cancion implica que una persona ingresara todas las notas)
 def p_song(t):
@@ -108,9 +118,8 @@ def p_note2(t):
 #Estructura de una improvisacion(improvisacion implica que la persona ingresera solo unos valores y el compilador generara el resto)
 def p_improv(t):
     'improv : IMPROVISATION LPAREN KCONST RPAREN COLON degreeLines'
-    global tipo
+    global tipo,tonalidad
     tipo = "improvisation"
-    global tonalidad
     t = t[3]
     tonalidad = t[0]
     if len(t) == 3:
@@ -181,23 +190,15 @@ def p_error(p):
 
 def analisisSintactico(input):
 
-    global error
+    global error,notas,ritmos,octavas,grados,valores,estructura1,estructura2,estructura3
     error = ""
-    global notas
     notas = []
-    global ritmos
     ritmos = []
-    global octavas
     octavas = []
-    global grados
     grados = []
-    global valores
     valores = []
-    global estructura1
     estructura1 = []
-    global estructura2
     estructura2 = []
-    global estructura3
     estructura3 = []
 
 

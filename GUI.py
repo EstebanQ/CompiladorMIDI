@@ -40,7 +40,7 @@ def save():
 
 #Metodo que guarda un nuevo archivo
 def saveas():
-    filen = filedialog.asksaveasfilename()
+    filen = filedialog.asksaveasfilename(defaultextension = '.txt',filetypes=[("Text files","*.txt")])
     output = txt.get('1.0',"end-1c")
     efile = open(filen, 'w+')
     efile.write(output)
@@ -56,6 +56,9 @@ def midi():
     txt2.insert("end-1c", AnalizadorSintactico.analisisSintactico(txt.get('1.0', "end-1c")))
     if len(txt2.get('1.0',"end-1c")) == 0:
         stk.funcion()
+        filen = filedialog.asksaveasfilename(initialfile = stk.titulo,filetypes = [("Midi files", "*.mid")],defaultextension = '.mid')
+        with open(filen, 'w+') as outf:
+            stk.mf.writeFile(outf)
         txt2.insert("end-1c", "MIDI Completed")
     txt2.config(state=tki.DISABLED)
 
@@ -77,7 +80,7 @@ txt = tki.Text(txt_frm, borderwidth=3, relief="sunken")
 txt.config(font=("consolas", 12), undo=True, wrap='word')
 txt.grid(row=0, column=0, sticky="nsew", padx=2, pady=2)
 
-txt_frm2 = tki.Frame(root, width=1000, height=70)
+txt_frm2 = tki.Frame(root, width=50, height=20)
 txt_frm2.pack(fill="both", expand=True)
 txt_frm2.grid_propagate(False)
 txt_frm2.grid_rowconfigure(0, weight=1)

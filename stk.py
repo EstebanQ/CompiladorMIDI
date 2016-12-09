@@ -568,25 +568,19 @@ def convertirArreglo(arreglo):
 #song(starWarsNotas,starWarsRitmos,starWarsOctavas)
 track = 0
 count = 0
+titulo = ""
 
 def funcion():
-    global indice,count
+    global indice,count,titulo,arregloNotas,arregloOctavas,arregloRitmos,arregloVelocidades,arregloVolumenes,arregloGrados,arregloValores
     indice = 0
     count = 0
-
-    global arregloNotas
+    titulo = As.titulo
     arregloNotas = []
-    global arregloOctavas
     arregloOctavas = []
-    global arregloRitmos
     arregloRitmos = []
-    global arregloVelocidades
     arregloVelocidades = []
-    global arregloVolumenes
     arregloVolumenes = []
-    global arregloGrados
     arregloGrados = []
-    global arregloValores
     arregloValores = []
 
     if As.tipo == "song":
@@ -628,26 +622,8 @@ def funcion():
                 arregloVolumenes.append(As.estructura3[x])
             x += 1
 
-
-        print(arregloGrados)
-        print(arregloValores)
-        print(arregloVelocidades)
-        print(arregloVolumenes)
-        print(As.tonalidad)
-        print(As.grados)
-        print(As.valores)
-        print(As.estructura1)
-        print(As.estructura2)
-        print(As.estructura3)
-        #improvisation("ASusminor", 3, 7)
-
         mf.addTrackName(track, count, "Sample Track")
 
         for i in range(0,len(arregloGrados),2):
             indice = i
             improvisation(As.tonalidad,arregloGrados[i],arregloGrados[i+1])
-
-
-    # write it to disk
-    with open("output.mid", 'wb') as outf:
-        mf.writeFile(outf)
