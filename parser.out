@@ -1,0 +1,601 @@
+Created by PLY version 3.9 (http://www.dabeaz.com/ply)
+
+Grammar
+
+Rule 0     S' -> principal
+Rule 1     principal -> FILENAME SCONST AUTHOR SCONST INSTRUMENT ICONST song structure
+Rule 2     principal -> FILENAME SCONST AUTHOR SCONST INSTRUMENT ICONST improv structure
+Rule 3     song -> SONG COLON notesLines
+Rule 4     notesLines -> notesLine notesLines
+Rule 5     notesLines -> notesLine
+Rule 6     notesLine -> notes LBRACKET ICONST RBRACKET
+Rule 7     notes -> note notes
+Rule 8     notes -> note
+Rule 9     note -> NCONST LPAREN ICONST COMMA ICONST RPAREN
+Rule 10    note -> NCONST LPAREN ICONST COMMA FCONST RPAREN
+Rule 11    improv -> IMPROVISATION LPAREN KCONST RPAREN COLON degreeLines
+Rule 12    degreeLines -> degreeLine degreeLines
+Rule 13    degreeLines -> degreeLine
+Rule 14    degreeLine -> degrees LBRACKET ICONST RBRACKET
+Rule 15    degrees -> degree degree
+Rule 16    degrees -> degree
+Rule 17    degree -> DCONST LPAREN ICONST RPAREN
+Rule 18    structure -> STRUCTURE LBRACE repeat RBRACE
+Rule 19    repeat -> repeatValues COMMA repeat
+Rule 20    repeat -> repeatValues
+Rule 21    repeatValues -> ICONST LPAREN ICONST COMMA ICONST RPAREN
+
+Terminals, with rules where they appear
+
+AUTHOR               : 1 2
+COLON                : 3 11
+COMMA                : 9 10 19 21
+DCONST               : 17
+FCONST               : 10
+FILENAME             : 1 2
+ICONST               : 1 2 6 9 9 10 14 17 21 21 21
+IMPROVISATION        : 11
+INSTRUMENT           : 1 2
+KCONST               : 11
+LBRACE               : 18
+LBRACKET             : 6 14
+LPAREN               : 9 10 11 17 21
+NCONST               : 9 10
+RBRACE               : 18
+RBRACKET             : 6 14
+RPAREN               : 9 10 11 17 21
+SCONST               : 1 1 2 2
+SONG                 : 3
+STRUCTURE            : 18
+error                : 
+
+Nonterminals, with rules where they appear
+
+degree               : 15 15 16
+degreeLine           : 12 13
+degreeLines          : 11 12
+degrees              : 14
+improv               : 2
+note                 : 7 8
+notes                : 6 7
+notesLine            : 4 5
+notesLines           : 3 4
+principal            : 0
+repeat               : 18 19
+repeatValues         : 19 20
+song                 : 1
+structure            : 1 2
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . principal
+    (1) principal -> . FILENAME SCONST AUTHOR SCONST INSTRUMENT ICONST song structure
+    (2) principal -> . FILENAME SCONST AUTHOR SCONST INSTRUMENT ICONST improv structure
+
+    FILENAME        shift and go to state 1
+
+    principal                      shift and go to state 2
+
+state 1
+
+    (1) principal -> FILENAME . SCONST AUTHOR SCONST INSTRUMENT ICONST song structure
+    (2) principal -> FILENAME . SCONST AUTHOR SCONST INSTRUMENT ICONST improv structure
+
+    SCONST          shift and go to state 3
+
+
+state 2
+
+    (0) S' -> principal .
+
+
+
+state 3
+
+    (1) principal -> FILENAME SCONST . AUTHOR SCONST INSTRUMENT ICONST song structure
+    (2) principal -> FILENAME SCONST . AUTHOR SCONST INSTRUMENT ICONST improv structure
+
+    AUTHOR          shift and go to state 4
+
+
+state 4
+
+    (1) principal -> FILENAME SCONST AUTHOR . SCONST INSTRUMENT ICONST song structure
+    (2) principal -> FILENAME SCONST AUTHOR . SCONST INSTRUMENT ICONST improv structure
+
+    SCONST          shift and go to state 5
+
+
+state 5
+
+    (1) principal -> FILENAME SCONST AUTHOR SCONST . INSTRUMENT ICONST song structure
+    (2) principal -> FILENAME SCONST AUTHOR SCONST . INSTRUMENT ICONST improv structure
+
+    INSTRUMENT      shift and go to state 6
+
+
+state 6
+
+    (1) principal -> FILENAME SCONST AUTHOR SCONST INSTRUMENT . ICONST song structure
+    (2) principal -> FILENAME SCONST AUTHOR SCONST INSTRUMENT . ICONST improv structure
+
+    ICONST          shift and go to state 7
+
+
+state 7
+
+    (1) principal -> FILENAME SCONST AUTHOR SCONST INSTRUMENT ICONST . song structure
+    (2) principal -> FILENAME SCONST AUTHOR SCONST INSTRUMENT ICONST . improv structure
+    (3) song -> . SONG COLON notesLines
+    (11) improv -> . IMPROVISATION LPAREN KCONST RPAREN COLON degreeLines
+
+    SONG            shift and go to state 10
+    IMPROVISATION   shift and go to state 9
+
+    improv                         shift and go to state 8
+    song                           shift and go to state 11
+
+state 8
+
+    (2) principal -> FILENAME SCONST AUTHOR SCONST INSTRUMENT ICONST improv . structure
+    (18) structure -> . STRUCTURE LBRACE repeat RBRACE
+
+    STRUCTURE       shift and go to state 12
+
+    structure                      shift and go to state 13
+
+state 9
+
+    (11) improv -> IMPROVISATION . LPAREN KCONST RPAREN COLON degreeLines
+
+    LPAREN          shift and go to state 14
+
+
+state 10
+
+    (3) song -> SONG . COLON notesLines
+
+    COLON           shift and go to state 15
+
+
+state 11
+
+    (1) principal -> FILENAME SCONST AUTHOR SCONST INSTRUMENT ICONST song . structure
+    (18) structure -> . STRUCTURE LBRACE repeat RBRACE
+
+    STRUCTURE       shift and go to state 12
+
+    structure                      shift and go to state 16
+
+state 12
+
+    (18) structure -> STRUCTURE . LBRACE repeat RBRACE
+
+    LBRACE          shift and go to state 17
+
+
+state 13
+
+    (2) principal -> FILENAME SCONST AUTHOR SCONST INSTRUMENT ICONST improv structure .
+
+    $end            reduce using rule 2 (principal -> FILENAME SCONST AUTHOR SCONST INSTRUMENT ICONST improv structure .)
+
+
+state 14
+
+    (11) improv -> IMPROVISATION LPAREN . KCONST RPAREN COLON degreeLines
+
+    KCONST          shift and go to state 18
+
+
+state 15
+
+    (3) song -> SONG COLON . notesLines
+    (4) notesLines -> . notesLine notesLines
+    (5) notesLines -> . notesLine
+    (6) notesLine -> . notes LBRACKET ICONST RBRACKET
+    (7) notes -> . note notes
+    (8) notes -> . note
+    (9) note -> . NCONST LPAREN ICONST COMMA ICONST RPAREN
+    (10) note -> . NCONST LPAREN ICONST COMMA FCONST RPAREN
+
+    NCONST          shift and go to state 23
+
+    notes                          shift and go to state 21
+    notesLines                     shift and go to state 20
+    notesLine                      shift and go to state 22
+    note                           shift and go to state 19
+
+state 16
+
+    (1) principal -> FILENAME SCONST AUTHOR SCONST INSTRUMENT ICONST song structure .
+
+    $end            reduce using rule 1 (principal -> FILENAME SCONST AUTHOR SCONST INSTRUMENT ICONST song structure .)
+
+
+state 17
+
+    (18) structure -> STRUCTURE LBRACE . repeat RBRACE
+    (19) repeat -> . repeatValues COMMA repeat
+    (20) repeat -> . repeatValues
+    (21) repeatValues -> . ICONST LPAREN ICONST COMMA ICONST RPAREN
+
+    ICONST          shift and go to state 26
+
+    repeatValues                   shift and go to state 25
+    repeat                         shift and go to state 24
+
+state 18
+
+    (11) improv -> IMPROVISATION LPAREN KCONST . RPAREN COLON degreeLines
+
+    RPAREN          shift and go to state 27
+
+
+state 19
+
+    (7) notes -> note . notes
+    (8) notes -> note .
+    (7) notes -> . note notes
+    (8) notes -> . note
+    (9) note -> . NCONST LPAREN ICONST COMMA ICONST RPAREN
+    (10) note -> . NCONST LPAREN ICONST COMMA FCONST RPAREN
+
+    LBRACKET        reduce using rule 8 (notes -> note .)
+    NCONST          shift and go to state 23
+
+    note                           shift and go to state 19
+    notes                          shift and go to state 28
+
+state 20
+
+    (3) song -> SONG COLON notesLines .
+
+    STRUCTURE       reduce using rule 3 (song -> SONG COLON notesLines .)
+
+
+state 21
+
+    (6) notesLine -> notes . LBRACKET ICONST RBRACKET
+
+    LBRACKET        shift and go to state 29
+
+
+state 22
+
+    (4) notesLines -> notesLine . notesLines
+    (5) notesLines -> notesLine .
+    (4) notesLines -> . notesLine notesLines
+    (5) notesLines -> . notesLine
+    (6) notesLine -> . notes LBRACKET ICONST RBRACKET
+    (7) notes -> . note notes
+    (8) notes -> . note
+    (9) note -> . NCONST LPAREN ICONST COMMA ICONST RPAREN
+    (10) note -> . NCONST LPAREN ICONST COMMA FCONST RPAREN
+
+    STRUCTURE       reduce using rule 5 (notesLines -> notesLine .)
+    NCONST          shift and go to state 23
+
+    notes                          shift and go to state 21
+    notesLines                     shift and go to state 30
+    notesLine                      shift and go to state 22
+    note                           shift and go to state 19
+
+state 23
+
+    (9) note -> NCONST . LPAREN ICONST COMMA ICONST RPAREN
+    (10) note -> NCONST . LPAREN ICONST COMMA FCONST RPAREN
+
+    LPAREN          shift and go to state 31
+
+
+state 24
+
+    (18) structure -> STRUCTURE LBRACE repeat . RBRACE
+
+    RBRACE          shift and go to state 32
+
+
+state 25
+
+    (19) repeat -> repeatValues . COMMA repeat
+    (20) repeat -> repeatValues .
+
+    COMMA           shift and go to state 33
+    RBRACE          reduce using rule 20 (repeat -> repeatValues .)
+
+
+state 26
+
+    (21) repeatValues -> ICONST . LPAREN ICONST COMMA ICONST RPAREN
+
+    LPAREN          shift and go to state 34
+
+
+state 27
+
+    (11) improv -> IMPROVISATION LPAREN KCONST RPAREN . COLON degreeLines
+
+    COLON           shift and go to state 35
+
+
+state 28
+
+    (7) notes -> note notes .
+
+    LBRACKET        reduce using rule 7 (notes -> note notes .)
+
+
+state 29
+
+    (6) notesLine -> notes LBRACKET . ICONST RBRACKET
+
+    ICONST          shift and go to state 36
+
+
+state 30
+
+    (4) notesLines -> notesLine notesLines .
+
+    STRUCTURE       reduce using rule 4 (notesLines -> notesLine notesLines .)
+
+
+state 31
+
+    (9) note -> NCONST LPAREN . ICONST COMMA ICONST RPAREN
+    (10) note -> NCONST LPAREN . ICONST COMMA FCONST RPAREN
+
+    ICONST          shift and go to state 37
+
+
+state 32
+
+    (18) structure -> STRUCTURE LBRACE repeat RBRACE .
+
+    $end            reduce using rule 18 (structure -> STRUCTURE LBRACE repeat RBRACE .)
+
+
+state 33
+
+    (19) repeat -> repeatValues COMMA . repeat
+    (19) repeat -> . repeatValues COMMA repeat
+    (20) repeat -> . repeatValues
+    (21) repeatValues -> . ICONST LPAREN ICONST COMMA ICONST RPAREN
+
+    ICONST          shift and go to state 26
+
+    repeatValues                   shift and go to state 25
+    repeat                         shift and go to state 38
+
+state 34
+
+    (21) repeatValues -> ICONST LPAREN . ICONST COMMA ICONST RPAREN
+
+    ICONST          shift and go to state 39
+
+
+state 35
+
+    (11) improv -> IMPROVISATION LPAREN KCONST RPAREN COLON . degreeLines
+    (12) degreeLines -> . degreeLine degreeLines
+    (13) degreeLines -> . degreeLine
+    (14) degreeLine -> . degrees LBRACKET ICONST RBRACKET
+    (15) degrees -> . degree degree
+    (16) degrees -> . degree
+    (17) degree -> . DCONST LPAREN ICONST RPAREN
+
+    DCONST          shift and go to state 40
+
+    degreeLines                    shift and go to state 41
+    degreeLine                     shift and go to state 42
+    degree                         shift and go to state 44
+    degrees                        shift and go to state 43
+
+state 36
+
+    (6) notesLine -> notes LBRACKET ICONST . RBRACKET
+
+    RBRACKET        shift and go to state 45
+
+
+state 37
+
+    (9) note -> NCONST LPAREN ICONST . COMMA ICONST RPAREN
+    (10) note -> NCONST LPAREN ICONST . COMMA FCONST RPAREN
+
+    COMMA           shift and go to state 46
+
+
+state 38
+
+    (19) repeat -> repeatValues COMMA repeat .
+
+    RBRACE          reduce using rule 19 (repeat -> repeatValues COMMA repeat .)
+
+
+state 39
+
+    (21) repeatValues -> ICONST LPAREN ICONST . COMMA ICONST RPAREN
+
+    COMMA           shift and go to state 47
+
+
+state 40
+
+    (17) degree -> DCONST . LPAREN ICONST RPAREN
+
+    LPAREN          shift and go to state 48
+
+
+state 41
+
+    (11) improv -> IMPROVISATION LPAREN KCONST RPAREN COLON degreeLines .
+
+    STRUCTURE       reduce using rule 11 (improv -> IMPROVISATION LPAREN KCONST RPAREN COLON degreeLines .)
+
+
+state 42
+
+    (12) degreeLines -> degreeLine . degreeLines
+    (13) degreeLines -> degreeLine .
+    (12) degreeLines -> . degreeLine degreeLines
+    (13) degreeLines -> . degreeLine
+    (14) degreeLine -> . degrees LBRACKET ICONST RBRACKET
+    (15) degrees -> . degree degree
+    (16) degrees -> . degree
+    (17) degree -> . DCONST LPAREN ICONST RPAREN
+
+    STRUCTURE       reduce using rule 13 (degreeLines -> degreeLine .)
+    DCONST          shift and go to state 40
+
+    degreeLines                    shift and go to state 49
+    degreeLine                     shift and go to state 42
+    degree                         shift and go to state 44
+    degrees                        shift and go to state 43
+
+state 43
+
+    (14) degreeLine -> degrees . LBRACKET ICONST RBRACKET
+
+    LBRACKET        shift and go to state 50
+
+
+state 44
+
+    (15) degrees -> degree . degree
+    (16) degrees -> degree .
+    (17) degree -> . DCONST LPAREN ICONST RPAREN
+
+    LBRACKET        reduce using rule 16 (degrees -> degree .)
+    DCONST          shift and go to state 40
+
+    degree                         shift and go to state 51
+
+state 45
+
+    (6) notesLine -> notes LBRACKET ICONST RBRACKET .
+
+    NCONST          reduce using rule 6 (notesLine -> notes LBRACKET ICONST RBRACKET .)
+    STRUCTURE       reduce using rule 6 (notesLine -> notes LBRACKET ICONST RBRACKET .)
+
+
+state 46
+
+    (9) note -> NCONST LPAREN ICONST COMMA . ICONST RPAREN
+    (10) note -> NCONST LPAREN ICONST COMMA . FCONST RPAREN
+
+    ICONST          shift and go to state 53
+    FCONST          shift and go to state 52
+
+
+state 47
+
+    (21) repeatValues -> ICONST LPAREN ICONST COMMA . ICONST RPAREN
+
+    ICONST          shift and go to state 54
+
+
+state 48
+
+    (17) degree -> DCONST LPAREN . ICONST RPAREN
+
+    ICONST          shift and go to state 55
+
+
+state 49
+
+    (12) degreeLines -> degreeLine degreeLines .
+
+    STRUCTURE       reduce using rule 12 (degreeLines -> degreeLine degreeLines .)
+
+
+state 50
+
+    (14) degreeLine -> degrees LBRACKET . ICONST RBRACKET
+
+    ICONST          shift and go to state 56
+
+
+state 51
+
+    (15) degrees -> degree degree .
+
+    LBRACKET        reduce using rule 15 (degrees -> degree degree .)
+
+
+state 52
+
+    (10) note -> NCONST LPAREN ICONST COMMA FCONST . RPAREN
+
+    RPAREN          shift and go to state 57
+
+
+state 53
+
+    (9) note -> NCONST LPAREN ICONST COMMA ICONST . RPAREN
+
+    RPAREN          shift and go to state 58
+
+
+state 54
+
+    (21) repeatValues -> ICONST LPAREN ICONST COMMA ICONST . RPAREN
+
+    RPAREN          shift and go to state 59
+
+
+state 55
+
+    (17) degree -> DCONST LPAREN ICONST . RPAREN
+
+    RPAREN          shift and go to state 60
+
+
+state 56
+
+    (14) degreeLine -> degrees LBRACKET ICONST . RBRACKET
+
+    RBRACKET        shift and go to state 61
+
+
+state 57
+
+    (10) note -> NCONST LPAREN ICONST COMMA FCONST RPAREN .
+
+    NCONST          reduce using rule 10 (note -> NCONST LPAREN ICONST COMMA FCONST RPAREN .)
+    LBRACKET        reduce using rule 10 (note -> NCONST LPAREN ICONST COMMA FCONST RPAREN .)
+
+
+state 58
+
+    (9) note -> NCONST LPAREN ICONST COMMA ICONST RPAREN .
+
+    NCONST          reduce using rule 9 (note -> NCONST LPAREN ICONST COMMA ICONST RPAREN .)
+    LBRACKET        reduce using rule 9 (note -> NCONST LPAREN ICONST COMMA ICONST RPAREN .)
+
+
+state 59
+
+    (21) repeatValues -> ICONST LPAREN ICONST COMMA ICONST RPAREN .
+
+    COMMA           reduce using rule 21 (repeatValues -> ICONST LPAREN ICONST COMMA ICONST RPAREN .)
+    RBRACE          reduce using rule 21 (repeatValues -> ICONST LPAREN ICONST COMMA ICONST RPAREN .)
+
+
+state 60
+
+    (17) degree -> DCONST LPAREN ICONST RPAREN .
+
+    DCONST          reduce using rule 17 (degree -> DCONST LPAREN ICONST RPAREN .)
+    LBRACKET        reduce using rule 17 (degree -> DCONST LPAREN ICONST RPAREN .)
+
+
+state 61
+
+    (14) degreeLine -> degrees LBRACKET ICONST RBRACKET .
+
+    DCONST          reduce using rule 14 (degreeLine -> degrees LBRACKET ICONST RBRACKET .)
+    STRUCTURE       reduce using rule 14 (degreeLine -> degrees LBRACKET ICONST RBRACKET .)
+

@@ -2,6 +2,8 @@ from midiutil.MidiFile import MIDIFile
 
 import random,AnalizadorSintactico as As
 
+indice = 0
+
 # NOTAS
 aBem = 56 #Bem = bemol
 a = 57
@@ -209,7 +211,8 @@ def improvisation(key, grade1, grade2):
             improvisation(key, grade1, grade2)
         else:
             primero = asignarNota(key,0)
-            count = 0  #contador para time
+            count = time  #contador para time
+            print(time)
             #play = Major(primero, count)
             play = tipoGrado(tipoTonalidad,1,primero,count)
             progresion.append(1)
@@ -247,12 +250,16 @@ def improvisation(key, grade1, grade2):
 def llenar(arrNotas,arrRitmos,arrDuraciones):
     channel = 0
     volume = 100
-    track = 0   # the only track
-    time = 0    # start at the beginning
-    mf.addTrackName(track, time, "Sample Track")
-    mf.addTempo(track, time, 180)
+    #track = 0   # the only track
+    #time = 0    # start at the beginning
+    #mf.addTrackName(track, time, "Sample Track")
+    #mf.addTempo(track, time, 180)
     i = 0
     for elemento in arrNotas:
+        volume = arregloVolumenes[indice]
+        tempo = arregloVelocidades[indice]
+        mf.addProgramChange(track, channel, arrRitmos[i], 0)
+        mf.addTempo(track, arrRitmos[i], tempo)
         mf.addNote(track, channel, arrNotas[i], arrRitmos[i], arrDuraciones[i], volume)
         i = i+1
     return
@@ -556,9 +563,12 @@ def convertirArreglo(arreglo):
 #imp1 = improvisation("Gminor",1,4)
 #song(arrNotas,arrRitmos)
 #song(starWarsNotas,starWarsRitmos,starWarsOctavas)
-
+track = 0
+time = 0
 
 def funcion():
+    global indice
+    indice = 0
 
     global arregloNotas
     arregloNotas = []
@@ -627,6 +637,7 @@ def funcion():
                 arregloVolumenes.append(As.estructura3[x])
             x += 1
 
+
         print(arregloGrados)
         print(arregloValores)
         print(arregloVelocidades)
@@ -638,6 +649,13 @@ def funcion():
         print(As.estructura2)
         print(As.estructura3)
         #improvisation("ASusminor", 3, 7)
+
+        mf.addTrackName(track, time, "Sample Track")
+
+        for i in range(0,len(arregloGrados),2):
+            indice = i
+            print(i)
+            improvisation(As.tonalidad,arregloGrados[i],arregloGrados[i+1])
 
 
     # write it to disk
