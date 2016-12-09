@@ -476,24 +476,75 @@ arrRitmos = []
 arrDuraciones = []
 
 def song(notas,ritmos,registros): # recibe un arreglo de notas y un arreglo de ritmos
+    convertirArreglo(notas)
     index = 0
     time = 0
     duration = 0
     track = 0  # the only track
-    mf.addTrackName(track, time, "Sample Track")
-    mf.addTempo(track, time, 180)
     octava(notas,registros)
+    mf.addTrackName(track, time, "Sample Track")
     for nota in notas:
         channel = 0
-        volume = 100
+        #volume = 100
+        volume = arregloVolumenes[index]
+        tempo = arregloVelocidades[index]
         pitch = nota  # C4 (middle C)
         time = time+duration  # start on
         if (index < len(notas)):
             duration = ritmos[index]  # beat long
+        #mf.addTempo(track, time, 180)
+        mf.addProgramChange(track,channel,time,int(As.instrumento))
+        mf.addTempo(track, time, tempo)
         mf.addNote(track, channel, pitch, time, duration, volume)
         index = index+1
     return
 
+def convertirArreglo(arreglo):
+    i = 0
+    for var in arreglo:
+        if (var == "aBem"):
+            arreglo[i] = aBem
+        elif (var == "a"):
+            arreglo[i] = a
+        elif (var == "aSus"):
+            arreglo[i] = aSus
+        elif (var == "bBem"):
+            arreglo[i] = bBem
+        elif (var == "b"):
+            arreglo[i] = b
+        elif (var == "bSus"):
+            arreglo[i] = bSus
+        elif (var == "cBem"):
+            arreglo[i] = cBem
+        elif (var == "c"):
+            arreglo[i] = c
+        elif (var == "cSus"):
+            arreglo[i] = cSus
+        elif (var == "dBem"):
+            arreglo[i] = dBem
+        elif (var == "d"):
+            arreglo[i] = d
+        elif (var == "dSus"):
+            arreglo[i] = dSus
+        elif (var == "eBem"):
+            arreglo[i] = eBem
+        elif (var == "e"):
+            arreglo[i] = e
+        elif (var == "eSus"):
+            arreglo[i] = eSus
+        elif (var == "fBem"):
+            arreglo[i] = fBem
+        elif (var == "f"):
+            arreglo[i] = f
+        elif (var == "fSus"):
+            arreglo[i] = fSus
+        elif (var == "gBem"):
+            arreglo[i] = gBem
+        elif (var == "g"):
+            arreglo[i] = g
+        elif (var == "gSus"):
+            arreglo[i] = gSus
+        i = i+1
 
 #mf.addTrackName(track, time, "Sample Track")
 #mf.addTempo(track, time, 180)
@@ -556,6 +607,8 @@ def funcion():
         print(As.estructura2)
         print(As.estructura3)
         #improvisation("ASusminor",3,7)
+        song(arregloNotas,arregloRitmos,arregloOctavas)
+
     else:
         # Se acomodan todos los valores en un solo arreglo de cada tipo(arreglo de notas, octavas, ritmos, etc.)
         posiciones = [0]
@@ -585,6 +638,7 @@ def funcion():
         print(As.estructura2)
         print(As.estructura3)
         #improvisation("ASusminor", 3, 7)
+
 
     # write it to disk
     with open("output.mid", 'wb') as outf:
