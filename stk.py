@@ -29,10 +29,10 @@ gSus = 68
 
 
 # GRADOS DE LAS ESCALAS
-MajorKey = ["I", "ii", "iii", "IV", "V", "vi", "viid"]
-minorKey = ["i", "iid", "III", "iv", "v", "VI", "VII"]
+MajorKey = ["I", "ii", "iii", "IV", "V", "vi", "viid"] #informativo
+minorKey = ["i", "iid", "III", "iv", "v", "VI", "VII"] #informativo
 
-# TONICAS DE LAS TONALIDADES
+# TONICAS DE LAS TONALIDADES (arreglos de notas a partir de los cuales se construyen los acordes de cada tonalidad)
 CMajor = [c,d,e,f,g,a,b]
 DMajor = [d,e,fSus,g,a,b,cSus]
 EMajor = [e,fSus,gSus,a,b,cSus,dSus]
@@ -64,15 +64,16 @@ GSusminor = [gSus,aSus,b,cSus,dSus,e,fSus]
 DSusminor = [dSus,eSus,fSus,gSus,aSus,b,cSus]
 ASusminor = [aSus,bSus,cSus,dSus,eSus,fSus,gSus]
 
-# PROGRESIONES
-sig1 = [1,2,3,4,5,6,7]
-sig2 = [1,2,5,6]
-sig3 = [3,6,4,7]
-sig4 = [1,4,5,7,6,2]
-sig5 = [1,5,6,2,4]
-sig6 = [6,2,5,4,7]
-sig7 = [1,2,4,5,6]
+# GRADOS SIGUIENTES
+sig1 = [1,2,3,4,5,6,7] #grados siguientes del 1er grado
+sig2 = [1,2,5,6] #grados siguientes del 2do grado
+sig3 = [3,6,4,7] #grados siguientes del 3er grado
+sig4 = [1,4,5,7,6,2] #grados siguientes del 4to grado
+sig5 = [1,5,6,2,4] #grados siguientes del 5to grado
+sig6 = [6,2,5,4,7] #grados siguientes del 6to grado
+sig7 = [1,2,4,5,6] #grados siguientes del 7mo grado
 
+#Variables
 progresion = []
 
 mf = MIDIFile(1)  # only 1 track
@@ -91,6 +92,7 @@ arregloGrados = []
 
 arregloValores = []
 
+#busca los siguientes para cada grado basado en los arreglos de SIGUIENTES
 def siguientes(grade):
     if (grade == 1):
         sig = sig1
@@ -108,6 +110,7 @@ def siguientes(grade):
         sig = sig7
     return sig
 
+#método recursivo para improvisation
 def rec_improvisation(key,grade,grados,sigui,contador):
     #if (key == "CMajor"):
     tipoTonalidad = tonalidad(key)
@@ -133,6 +136,7 @@ def rec_improvisation(key,grade,grados,sigui,contador):
 
     return
 
+#método usado en improvisation para buscar la finalización de una progresión
 def End(key, grade, sgte, contador): #terminar progresión
     tipoTonalidad = tonalidad(key)
     if(5 in sgte): # buscar el quinto grado para luego ir al primero y terminar
@@ -159,8 +163,9 @@ def End(key, grade, sgte, contador): #terminar progresión
         End(key, next, sigui, contador)
     return
 
+#método que busca la calidad del grado(mayor, menor, aumentado o disminuido) dependiendo de si la tonalidad es Mayor o menor
 def tipoGrado (tipoTonalidad,grado,nota,contador):
-    if (tipoTonalidad == "Major"):
+    if (tipoTonalidad == "Major"): #si la tonalidad es mayor
         if (grado == 1):
             Major(nota,contador)
         elif (grado == 2):
@@ -175,7 +180,7 @@ def tipoGrado (tipoTonalidad,grado,nota,contador):
             minor(nota,contador)
         elif (grado == 7):
             diminished(nota,contador)
-    elif (tipoTonalidad == "minor"):
+    elif (tipoTonalidad == "minor"): #si la tonalidad es menor
         if (grado == 1):
             minor(nota,contador)
         elif (grado == 2):
@@ -192,6 +197,7 @@ def tipoGrado (tipoTonalidad,grado,nota,contador):
             Major(nota,contador)
     return
 
+#método que busca si la tonalidad ingresada por el usuario es Mayor o menor
 def tonalidad(key):
     if "Major" in key:
         tipoTonalidad = "Major"
@@ -199,9 +205,9 @@ def tonalidad(key):
         tipoTonalidad = "minor"
     return tipoTonalidad
 
+#método principal para cuando el usuario ingresa una improvisation
 def improvisation(key, grade1, grade2):
     global count
-    print (count)
     grados = [grade1,grade2]
     tipoTonalidad = tonalidad(key)
     #if (key == "CMajor"):
@@ -226,7 +232,6 @@ def improvisation(key, grade1, grade2):
             play1 = tipoGrado(tipoTonalidad,second,note2,count)
             progresion.append(second)
             rec_improvisation(key,grados[0],grados,next2,count)
-            print(progresion)
     elif (grade1 == 1 & grade2 != 1):
         grades =[2,3,4,5,6,7]
         grades.remove(grade2)
@@ -247,22 +252,21 @@ def improvisation(key, grade1, grade2):
     llenar(arrNotas,arrRitmos,arrDuraciones)
     return
 
+#llena los arreglos de notas, ritmos y duraciones provenientes del método improvisation, en el archivo midi
 def llenar(arrNotas,arrRitmos,arrDuraciones):
-    channel = 0
-    #track = 0   # the only track
-    #time = 0    # start at the beginning
-    #mf.addTrackName(track, time, "Sample Track")
-    #mf.addTempo(track, time, 180)
-    i = 0
+    channel = 0 #canal del midi
+    i = 0 #indice
     for elemento in arrNotas:
-        volume = arregloVolumenes[indice]
-        tempo = arregloVelocidades[indice]
-        mf.addProgramChange(track, channel, arrRitmos[i], 0)
-        mf.addTempo(track, arrRitmos[i], tempo)
+        volume = arregloVolumenes[indice] #volumen del midi
+        #tempo = arregloVelocidades[indice] #velocidad
+        print(tempo)
+        mf.addProgramChange(track, channel, arrRitmos[i], int(As.instrumento))
+        #mf.addTempo(track, arrRitmos[i], tempo)
         mf.addNote(track, channel, arrNotas[i], arrRitmos[i], arrDuraciones[i], volume)
         i = i+1
     return
 
+#se llenan los arreglos con las notas base para cada grado
 def asignarNota(key, nota):
     if (key == "CMajor"):
         nota = CMajor[nota]
@@ -326,6 +330,7 @@ def asignarNota(key, nota):
         nota = ASusminor[nota]
     return nota
 
+#método que construye un grado si es Mayor
 def Major(note, where):
     global count
     tonic = note
@@ -359,6 +364,7 @@ def Major(note, where):
     arrRitmos.append(count)
     return
 
+#método que construye un grado si es menor
 def minor(note, where):
     global count
     tonic = note
@@ -393,6 +399,7 @@ def minor(note, where):
     arrRitmos.append(count)
     return
 
+#método que construye un grado si es aumentado
 def augmented(note, where):
     global count
     tonic = note
@@ -427,6 +434,7 @@ def augmented(note, where):
     arrRitmos.append(count)
     return
 
+#método que construye un grado si es disminuido
 def diminished(note, where):
     global count
     tonic = note
@@ -461,6 +469,7 @@ def diminished(note, where):
     arrRitmos.append(count)
     return
 
+#actualiza el arreglo de notas (para song) con base en los registros ingresados por el usuario(qué tan aguda o grave desea una nota)
 def octava(arrNotas,arrRegistros):
     index = 0
     for nota in arrNotas:
@@ -477,15 +486,16 @@ def octava(arrNotas,arrRegistros):
 
 # estrellitaNotas = [a,a,e,e,fSus,fSus,e,d,d,cSus,cSus,b,b,a]
 # estrellitaRitmos = [1,1,1,1,1,1,2,1,1,1,1,1,1,2]
-starWarsNotas = [a,e,d,cSus,b,a,e,d,cSus,b,a,e,d,cSus,d,b]
-starWarsRitmos = [2,3,1/4,1/4,1/2,2,1,1/4,1/4,1/2,2,1,1/4,1/4,1/2,4]
-starWarsOctavas = [3,3,3,3,3,4,3,3,3,3,4,3,3,3,3,3]
+#starWarsNotas = [a,e,d,cSus,b,a,e,d,cSus,b,a,e,d,cSus,d,b]
+#starWarsRitmos = [2,3,1/4,1/4,1/2,2,1,1/4,1/4,1/2,2,1,1/4,1/4,1/2,4]
+#starWarsOctavas = [3,3,3,3,3,4,3,3,3,3,4,3,3,3,3,3]
 
 arrNotas = []
 arrRitmos = []
 arrDuraciones = []
 
-def song(notas,ritmos,registros): # recibe un arreglo de notas y un arreglo de ritmos
+#método para construir una canción a partir de las notas y demás datos ingresados por el usuario
+def song(notas,ritmos,registros): # recibe un arreglo de notas, un arreglo de ritmos y uno de registros(octavas)
     convertirArreglo(notas)
     index = 0
     time = 0
@@ -509,6 +519,7 @@ def song(notas,ritmos,registros): # recibe un arreglo de notas y un arreglo de r
         index = index+1
     return
 
+#convierte los componentes del arreglo de string a int
 def convertirArreglo(arreglo):
     i = 0
     for var in arreglo:
@@ -560,9 +571,6 @@ def convertirArreglo(arreglo):
 #mf.addTempo(track, time, 180)
 #mf.addTempo(track, 10, 90)
 
-#print(arrNotas)
-#print(arrRitmos)
-#print(arrDuraciones)
 #imp1 = improvisation("Gminor",1,4)
 #song(arrNotas,arrRitmos)
 #song(starWarsNotas,starWarsRitmos,starWarsOctavas)
@@ -570,6 +578,7 @@ track = 0
 count = 0
 titulo = ""
 
+#main
 def funcion(filen):
     global indice,count,titulo,arregloNotas,arregloOctavas,arregloRitmos,arregloVelocidades,arregloVolumenes,arregloGrados,mf
     indice = 0
@@ -607,7 +616,6 @@ def funcion(filen):
 
         song(arregloNotas,arregloRitmos,arregloOctavas)
 
-        print(arregloNotas)
         with open(filen, 'wb') as outf:
             mf.writeFile(outf)
 
@@ -629,6 +637,7 @@ def funcion(filen):
             x += 1
 
         mf.addTrackName(track, count, "Sample Track")
+        mf.addTempo(track, 0, 80)
 
         for i in range(0,len(arregloGrados),2):
             indice = i

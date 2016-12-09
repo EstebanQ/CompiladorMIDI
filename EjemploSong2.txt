@@ -1,6 +1,6 @@
 filename "melodia"
 author "Esteban"
-instrument 100
+instrument 0
 song:
 G(3,1) A(3,1/2) E(4,1/2)[1]
 D(4,2) A(3,8)[2]
