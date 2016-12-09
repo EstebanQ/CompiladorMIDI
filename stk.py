@@ -200,6 +200,8 @@ def tonalidad(key):
     return tipoTonalidad
 
 def improvisation(key, grade1, grade2):
+    global count
+    print (count)
     grados = [grade1,grade2]
     tipoTonalidad = tonalidad(key)
     #if (key == "CMajor"):
@@ -211,8 +213,6 @@ def improvisation(key, grade1, grade2):
             improvisation(key, grade1, grade2)
         else:
             primero = asignarNota(key,0)
-            count = time  #contador para time
-            print(time)
             #play = Major(primero, count)
             play = tipoGrado(tipoTonalidad,1,primero,count)
             progresion.append(1)
@@ -249,7 +249,6 @@ def improvisation(key, grade1, grade2):
 
 def llenar(arrNotas,arrRitmos,arrDuraciones):
     channel = 0
-    volume = 100
     #track = 0   # the only track
     #time = 0    # start at the beginning
     #mf.addTrackName(track, time, "Sample Track")
@@ -328,6 +327,7 @@ def asignarNota(key, nota):
     return nota
 
 def Major(note, where):
+    global count
     tonic = note
     mediant = note + 4
     dominant = note + 7
@@ -338,28 +338,29 @@ def Major(note, where):
     channel = 0
     volume = 100
     pitch = list[0]  # C4 (middle C)
-    time = where  # start on beat 4
+    count = where  # start on beat 4
     duration = 1  # 1 beat long
     arrNotas.append(pitch)
     arrDuraciones.append(duration)
-    arrRitmos.append(time)
+    arrRitmos.append(count)
 
     pitch = list[1]  # E4
-    time = where  # start on beat 4
+    count = where  # start on beat 4
     duration = 1  # 1 beat long
     arrNotas.append(pitch)
     arrDuraciones.append(duration)
-    arrRitmos.append(time)
+    arrRitmos.append(count)
 
     pitch = list[2]  # G4
-    time = where  # start on beat 4
+    count = where  # start on beat 4
     duration = 1  # 1 beat long
     arrNotas.append(pitch)
     arrDuraciones.append(duration)
-    arrRitmos.append(time)
+    arrRitmos.append(count)
     return
 
 def minor(note, where):
+    global count
     tonic = note
     mediant = note+3
     dominant = note+7
@@ -371,28 +372,29 @@ def minor(note, where):
     channel = 0
     volume = 100
     pitch = list[0]  # C4 (middle C)
-    time = where  # start on beat 4
+    count = where  # start on beat 4
     duration = 1  # 1 beat long
     arrNotas.append(pitch)
     arrDuraciones.append(duration)
-    arrRitmos.append(time)
+    arrRitmos.append(count)
 
     pitch = list[1]  # E4
-    time = where  # start on beat 4
+    count = where  # start on beat 4
     duration = 1  # 1 beat long
     arrNotas.append(pitch)
     arrDuraciones.append(duration)
-    arrRitmos.append(time)
+    arrRitmos.append(count)
 
     pitch = list[2]  # G4
-    time = where  # start on beat 4
+    count = where  # start on beat 4
     duration = 1  # 1 beat long
     arrNotas.append(pitch)
     arrDuraciones.append(duration)
-    arrRitmos.append(time)
+    arrRitmos.append(count)
     return
 
 def augmented(note, where):
+    global count
     tonic = note
     mediant = note+4
     dominant = note+8
@@ -404,28 +406,29 @@ def augmented(note, where):
     channel = 0
     volume = 100
     pitch = list[0]  # C4 (middle C)
-    time = where  # start on beat 4
+    count = where  # start on beat 4
     duration = 1  # 1 beat long
     arrNotas.append(pitch)
     arrDuraciones.append(duration)
-    arrRitmos.append(time)
+    arrRitmos.append(count)
 
     pitch = list[1]  # E4
-    time = where  # start on beat 4
+    count = where  # start on beat 4
     duration = 1  # 1 beat long
     arrNotas.append(pitch)
     arrDuraciones.append(duration)
-    arrRitmos.append(time)
+    arrRitmos.append(count)
 
     pitch = list[2]  # G4
-    time = where  # start on beat 4
+    count = where  # start on beat 4
     duration = 1  # 1 beat long
     arrNotas.append(pitch)
     arrDuraciones.append(duration)
-    arrRitmos.append(time)
+    arrRitmos.append(count)
     return
 
 def diminished(note, where):
+    global count
     tonic = note
     mediant = note+3
     dominant = note+6
@@ -437,25 +440,25 @@ def diminished(note, where):
     channel = 0
     volume = 100
     pitch = list[0]  # C4 (middle C)
-    time = where  # start on beat 4
+    count = where  # start on beat 4
     duration = 1  # 1 beat long
     arrNotas.append(pitch)
     arrDuraciones.append(duration)
-    arrRitmos.append(time)
+    arrRitmos.append(count)
 
     pitch = list[1]  # E4
-    time = where  # start on beat 4
+    count = where  # start on beat 4
     duration = 1  # 1 beat long
     arrNotas.append(pitch)
     arrDuraciones.append(duration)
-    arrRitmos.append(time)
+    arrRitmos.append(count)
 
     pitch = list[2]  # G4
-    time = where  # start on beat 4
+    count = where  # start on beat 4
     duration = 1  # 1 beat long
     arrNotas.append(pitch)
     arrDuraciones.append(duration)
-    arrRitmos.append(time)
+    arrRitmos.append(count)
     return
 
 def octava(arrNotas,arrRegistros):
@@ -564,11 +567,12 @@ def convertirArreglo(arreglo):
 #song(arrNotas,arrRitmos)
 #song(starWarsNotas,starWarsRitmos,starWarsOctavas)
 track = 0
-time = 0
+count = 0
 
 def funcion():
-    global indice
+    global indice,count
     indice = 0
+    count = 0
 
     global arregloNotas
     arregloNotas = []
@@ -604,19 +608,6 @@ def funcion():
                 arregloVolumenes.append(As.estructura3[x])
             x += 1
 
-        print(arregloNotas)
-        print(arregloOctavas)
-        print(arregloRitmos)
-        print(arregloVelocidades)
-        print(arregloVolumenes)
-        print(As.instrumento)
-        print(As.notas)
-        print(As.octavas)
-        print(As.ritmos)
-        print(As.estructura1)
-        print(As.estructura2)
-        print(As.estructura3)
-        #improvisation("ASusminor",3,7)
         song(arregloNotas,arregloRitmos,arregloOctavas)
 
     else:
@@ -650,11 +641,10 @@ def funcion():
         print(As.estructura3)
         #improvisation("ASusminor", 3, 7)
 
-        mf.addTrackName(track, time, "Sample Track")
+        mf.addTrackName(track, count, "Sample Track")
 
         for i in range(0,len(arregloGrados),2):
             indice = i
-            print(i)
             improvisation(As.tonalidad,arregloGrados[i],arregloGrados[i+1])
 
 
