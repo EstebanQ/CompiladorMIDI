@@ -112,7 +112,7 @@ def p_improv(t):
     tipo = "improvisation"
     global tonalidad
     t = t[3]
-    tonalidad += t[0]
+    tonalidad = t[0]
     if len(t) == 3:
         if t[2] == '#':
             tonalidad += 'Sus'
