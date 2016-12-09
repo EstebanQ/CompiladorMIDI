@@ -140,7 +140,7 @@ def p_degreeLine(t):
 
 #Grados musicales
 def p_degrees(t):
-    'degrees : degree degrees'
+    'degrees : degree degree'
     pass
 
 def p_degrees2(t):
