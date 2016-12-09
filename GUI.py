@@ -5,8 +5,7 @@
 # ----------------------------------------------------------------------
 
 import tkinter as tki,AnalizadorLexico,AnalizadorSintactico,stk
-from tkinter import filedialog
-from tkinter import messagebox
+from tkinter import filedialog,messagebox
 
 #Metodo que genera un nuevo archivo
 def new():
@@ -14,9 +13,6 @@ def new():
     global filename
     filename = ""
     filemenu.entryconfig(2, state=tki.DISABLED)
-    txt2.config(state=tki.NORMAL)
-    txt2.delete('1.0', tki.END)
-    txt2.config(state=tki.DISABLED)
 
 #Metodo que abre un archivo preexistente
 def openf():
@@ -29,9 +25,6 @@ def openf():
     global filename
     filename = filen
     filemenu.entryconfig(2, state="normal")
-    txt2.config(state=tki.NORMAL)
-    txt2.delete('1.0', tki.END)
-    txt2.config(state=tki.DISABLED)
 
 #Metodo que guarda un archivo con su nombre
 def save():
@@ -55,15 +48,19 @@ def midi():
         tki.messagebox._show("Error","Cannot generate Midi from empty file.")
 
     else:
-        txt2.config(state=tki.NORMAL)
-        txt2.delete('1.0',tki.END)
-        txt2.insert("end-1c",AnalizadorLexico.analisisLexico(txt.get('1.0',"end-1c")))
-        txt2.insert("end-1c", AnalizadorSintactico.analisisSintactico(txt.get('1.0', "end-1c")))
-        if len(txt2.get('1.0',"end-1c")) == 0:
+        error = AnalizadorLexico.analisisLexico(txt.get('1.0',"end-1c"))
+        if error != "":
+            tki.messagebox._show("Lexical error", error)
+            return
+        error = AnalizadorSintactico.analisisSintactico(txt.get('1.0', "end-1c"))
+        if error == "":
             filen = filedialog.asksaveasfilename(initialfile = AnalizadorSintactico.titulo,filetypes = [("Midi files", "*.mid")],defaultextension = '.mid')
             stk.funcion(filen)
-            txt2.insert("end-1c", "MIDI Completed")
-        txt2.config(state=tki.DISABLED)
+            tki.messagebox._show("Success","Midi generated.")
+            return
+        else:
+            tki.messagebox._show("Syntactic error", error)
+            return
 
 root = tki.Tk()
 
@@ -82,16 +79,6 @@ txt_frm.grid_columnconfigure(0, weight=1)
 txt = tki.Text(txt_frm, borderwidth=3, relief="sunken")
 txt.config(font=("consolas", 12), undo=True, wrap='word')
 txt.grid(row=0, column=0, sticky="nsew", padx=2, pady=2)
-
-txt_frm2 = tki.Frame(root)
-txt_frm2.pack(fill="both", expand=True)
-txt_frm2.grid_propagate(False)
-txt_frm2.grid_rowconfigure(0, weight=1)
-txt_frm2.grid_columnconfigure(0, weight=1)
-
-txt2 = tki.Text(txt_frm2, borderwidth=3, relief="sunken")
-txt2.config(font=("consolas", 12), undo=True, wrap='word', state=tki.DISABLED)
-txt2.grid(row=0, column=0, sticky="nsew", padx=2, pady=2)
 
 scrollb = tki.Scrollbar(txt_frm, command=txt.yview)
 scrollb.grid(row=0, column=1, sticky='nsew')

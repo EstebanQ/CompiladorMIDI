@@ -17,7 +17,7 @@ tokens = (
     'FILENAME', 'AUTHOR', 'INSTRUMENT', 'SONG', 'STRUCTURE', 'IMPROVISATION',
 
     #Literales integer constant, string constant,fraction constant, notes constants, degrees constants, key constants
-    'ICONST','SCONST','FCONST','NCONST','DCONST','KCONST',
+    'ICONST','SCONST','FCONST','NCONST','KCONST',
 
     #Delimitadores ( ) [ ] { } , :
     'LPAREN', 'RPAREN',
@@ -67,9 +67,6 @@ t_SCONST = r'\"([^\\\n]|(\\.))*?\"'
 # Fraction literal
 t_FCONST = r'1/[24]'
 
-# Degrees literal
-t_DCONST = r'[1234567][MmAd]'
-
 # Key literal
 t_KCONST = r'CM|Am|FM|Dm|GM|Em|BMb|Gm|DM|Bm|EMb|Cm|AM|Fm\#|AMb|Fm|EM|Cm\#|DMb|Bmb|BM|Gm\#|GMb|Emb|FM\#|Dm\#|CMb|Amb|CM\#|Am\#'
 
@@ -90,7 +87,16 @@ def t_preprocessor(t):
 
 def t_error(t):
     global error
-    error = " Lexical Error: Illegal character at line " + str(t.lineno)
+    carac = t.value
+    indiceN = carac.find("\n")
+    indiceE = carac.find(" ")
+    if indiceN > indiceE:
+        -1 if indiceE == 0 else indiceE
+        carac = carac[0:indiceE]
+    else:
+        -1 if indiceN == 0 else indiceN
+        carac = carac[0:indiceN]
+    error = " Lexical Error: Illegal character " + carac + " at line " + str(t.lineno)
 
 
 def analisisLexico(input):

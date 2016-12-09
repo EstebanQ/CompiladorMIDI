@@ -5,9 +5,9 @@ _tabversion = '3.8'
 
 _lr_method = 'LALR'
 
-_lr_signature = 'CD80101E944BB5AD4CACD224D8252596'
+_lr_signature = '7BA2D83AF885C8E7626F0CCB26873B35'
     
-_lr_action_items = {'LBRACE':([13,],[17,]),'ICONST':([6,17,30,31,33,34,46,47,48,],[7,26,36,37,26,39,51,53,54,]),'SCONST':([1,4,],[3,5,]),'FCONST':([46,],[52,]),'RPAREN':([18,51,52,53,],[27,55,56,57,]),'IMPROVISATION':([7,],[9,]),'KCONST':([14,],[18,]),'STRUCTURE':([8,11,19,23,28,43,44,45,50,58,],[13,13,-5,-3,-4,-13,-11,-6,-12,-14,]),'DCONST':([35,41,42,43,58,],[42,42,-17,42,-14,]),'AUTHOR':([3,],[4,]),'SONG':([7,],[10,]),'RBRACE':([24,25,38,57,],[32,-20,-19,-21,]),'COLON':([10,27,],[15,35,]),'LBRACKET':([20,21,29,40,41,42,49,55,56,],[-8,30,-7,48,-16,-17,-15,-9,-10,]),'INSTRUMENT':([5,],[6,]),'LPAREN':([9,22,26,],[14,31,34,]),'COMMA':([25,37,39,57,],[33,46,47,-21,]),'NCONST':([15,19,20,45,55,56,],[22,22,22,-6,-9,-10,]),'FILENAME':([0,],[1,]),'$end':([2,12,16,32,],[0,-2,-1,-18,]),'RBRACKET':([36,54,],[45,58,]),}
+_lr_action_items = {'RBRACE':([26,28,30,31,47,49,57,68,],[37,-24,41,-21,-23,-20,-25,-22,]),'FILENAME':([0,],[2,]),'AUTHOR':([3,],[4,]),'COMMA':([28,31,43,48,57,68,],[39,42,50,58,-25,-22,]),'$end':([1,12,14,37,41,],[0,-2,-1,-19,-18,]),'LPAREN':([11,22,27,29,],[17,33,38,40,]),'ICONST':([6,18,19,33,35,38,39,40,42,45,50,52,54,55,58,62,69,],[7,27,29,43,44,46,27,48,29,55,60,55,55,-17,64,67,-14,]),'LBRACKET':([20,24,32,53,54,55,63,65,66,],[-8,35,-7,62,-16,-17,-15,-10,-9,]),'RPAREN':([25,46,59,60,64,],[36,57,65,66,68,]),'KCONST':([17,],[25,]),'INSTRUMENT':([5,],[6,]),'FCONST':([50,],[59,]),'SONG':([7,],[10,]),'NCONST':([16,20,23,51,65,66,],[22,22,22,-6,-10,-9,]),'LBRACE':([13,15,],[18,19,]),'STRUCTURE':([8,9,21,23,34,51,52,56,61,69,],[13,15,-3,-5,-4,-6,-13,-11,-12,-14,]),'SCONST':([2,4,],[3,5,]),'IMPROVISATION':([7,],[11,]),'COLON':([10,36,],[16,45,]),'RBRACKET':([44,67,],[51,69,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -16,7 +16,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'degree':([35,41,43,],[41,49,41,]),'notes':([15,19,20,],[21,21,29,]),'structure':([8,11,],[12,16,]),'degrees':([35,43,],[40,40,]),'notesLine':([15,19,],[19,19,]),'improv':([7,],[8,]),'note':([15,19,20,],[20,20,20,]),'song':([7,],[11,]),'repeat':([17,33,],[24,38,]),'principal':([0,],[2,]),'notesLines':([15,19,],[23,28,]),'degreeLines':([35,43,],[44,50,]),'repeatValues':([17,33,],[25,25,]),'degreeLine':([35,43,],[43,43,]),}
+_lr_goto_items = {'principal':([0,],[1,]),'degrees':([45,52,],[53,53,]),'repeatValuesImprovisation':([18,39,],[28,28,]),'repeatSong':([19,42,],[30,49,]),'improv':([7,],[8,]),'note':([16,20,23,],[20,20,20,]),'repeatImprovisation':([18,39,],[26,47,]),'notes':([16,20,23,],[24,32,24,]),'degreeLines':([45,52,],[56,61,]),'song':([7,],[9,]),'structureSong':([9,],[14,]),'structureImprovisation':([8,],[12,]),'notesLine':([16,23,],[23,23,]),'repeatValuesSong':([19,42,],[31,31,]),'degree':([45,52,54,],[54,54,63,]),'notesLines':([16,23,],[21,34,]),'degreeLine':([45,52,],[52,52,]),}
 
 _lr_goto = {}
 for _k, _v in _lr_goto_items.items():
@@ -26,25 +26,29 @@ for _k, _v in _lr_goto_items.items():
 del _lr_goto_items
 _lr_productions = [
   ("S' -> principal","S'",1,None,None,None),
-  ('principal -> FILENAME SCONST AUTHOR SCONST INSTRUMENT ICONST song structure','principal',8,'p_principal','AnalizadorSintactico.py',37),
-  ('principal -> FILENAME SCONST AUTHOR SCONST INSTRUMENT ICONST improv structure','principal',8,'p_principal2','AnalizadorSintactico.py',46),
-  ('song -> SONG COLON notesLines','song',3,'p_song','AnalizadorSintactico.py',56),
-  ('notesLines -> notesLine notesLines','notesLines',2,'p_notesLines','AnalizadorSintactico.py',62),
-  ('notesLines -> notesLine','notesLines',1,'p_notesLines2','AnalizadorSintactico.py',66),
-  ('notesLine -> notes LBRACKET ICONST RBRACKET','notesLine',4,'p_notesLine','AnalizadorSintactico.py',71),
-  ('notes -> note notes','notes',2,'p_notes','AnalizadorSintactico.py',78),
-  ('notes -> note','notes',1,'p_notes2','AnalizadorSintactico.py',82),
-  ('note -> NCONST LPAREN ICONST COMMA ICONST RPAREN','note',6,'p_note','AnalizadorSintactico.py',87),
-  ('note -> NCONST LPAREN ICONST COMMA FCONST RPAREN','note',6,'p_note2','AnalizadorSintactico.py',102),
-  ('improv -> IMPROVISATION LPAREN KCONST RPAREN COLON degreeLines','improv',6,'p_improv','AnalizadorSintactico.py',118),
-  ('degreeLines -> degreeLine degreeLines','degreeLines',2,'p_degreeLines','AnalizadorSintactico.py',135),
-  ('degreeLines -> degreeLine','degreeLines',1,'p_degreeLines2','AnalizadorSintactico.py',139),
-  ('degreeLine -> degrees LBRACKET ICONST RBRACKET','degreeLine',4,'p_degreeLine','AnalizadorSintactico.py',144),
-  ('degrees -> degree degree','degrees',2,'p_degrees','AnalizadorSintactico.py',150),
-  ('degrees -> degree','degrees',1,'p_degrees2','AnalizadorSintactico.py',154),
-  ('degree -> DCONST','degree',1,'p_degree','AnalizadorSintactico.py',159),
-  ('structure -> STRUCTURE LBRACE repeat RBRACE','structure',4,'p_structure','AnalizadorSintactico.py',165),
-  ('repeat -> repeatValues COMMA repeat','repeat',3,'p_repeat','AnalizadorSintactico.py',170),
-  ('repeat -> repeatValues','repeat',1,'p_repeat2','AnalizadorSintactico.py',174),
-  ('repeatValues -> ICONST LPAREN ICONST COMMA ICONST RPAREN','repeatValues',6,'p_repeatValues','AnalizadorSintactico.py',179),
+  ('principal -> FILENAME SCONST AUTHOR SCONST INSTRUMENT ICONST song structureSong','principal',8,'p_principal','AnalizadorSintactico.py',38),
+  ('principal -> FILENAME SCONST AUTHOR SCONST INSTRUMENT ICONST improv structureImprovisation','principal',8,'p_principal2','AnalizadorSintactico.py',47),
+  ('song -> SONG COLON notesLines','song',3,'p_song','AnalizadorSintactico.py',57),
+  ('notesLines -> notesLine notesLines','notesLines',2,'p_notesLines','AnalizadorSintactico.py',63),
+  ('notesLines -> notesLine','notesLines',1,'p_notesLines2','AnalizadorSintactico.py',67),
+  ('notesLine -> notes LBRACKET ICONST RBRACKET','notesLine',4,'p_notesLine','AnalizadorSintactico.py',72),
+  ('notes -> note notes','notes',2,'p_notes','AnalizadorSintactico.py',79),
+  ('notes -> note','notes',1,'p_notes2','AnalizadorSintactico.py',83),
+  ('note -> NCONST LPAREN ICONST COMMA ICONST RPAREN','note',6,'p_note','AnalizadorSintactico.py',88),
+  ('note -> NCONST LPAREN ICONST COMMA FCONST RPAREN','note',6,'p_note2','AnalizadorSintactico.py',103),
+  ('improv -> IMPROVISATION LPAREN KCONST RPAREN COLON degreeLines','improv',6,'p_improv','AnalizadorSintactico.py',119),
+  ('degreeLines -> degreeLine degreeLines','degreeLines',2,'p_degreeLines','AnalizadorSintactico.py',136),
+  ('degreeLines -> degreeLine','degreeLines',1,'p_degreeLines2','AnalizadorSintactico.py',140),
+  ('degreeLine -> degrees LBRACKET ICONST RBRACKET','degreeLine',4,'p_degreeLine','AnalizadorSintactico.py',145),
+  ('degrees -> degree degree','degrees',2,'p_degrees','AnalizadorSintactico.py',151),
+  ('degrees -> degree','degrees',1,'p_degrees2','AnalizadorSintactico.py',155),
+  ('degree -> ICONST','degree',1,'p_degree','AnalizadorSintactico.py',160),
+  ('structureSong -> STRUCTURE LBRACE repeatSong RBRACE','structureSong',4,'p_structureSong','AnalizadorSintactico.py',166),
+  ('structureImprovisation -> STRUCTURE LBRACE repeatImprovisation RBRACE','structureImprovisation',4,'p_structureImprovisation','AnalizadorSintactico.py',170),
+  ('repeatSong -> repeatValuesSong COMMA repeatSong','repeatSong',3,'p_repeatSong','AnalizadorSintactico.py',175),
+  ('repeatSong -> repeatValuesSong','repeatSong',1,'p_repeat2Song','AnalizadorSintactico.py',179),
+  ('repeatValuesSong -> ICONST LPAREN ICONST COMMA ICONST RPAREN','repeatValuesSong',6,'p_repeatValuesSong','AnalizadorSintactico.py',184),
+  ('repeatImprovisation -> repeatValuesImprovisation COMMA repeatImprovisation','repeatImprovisation',3,'p_repeatImprovisation','AnalizadorSintactico.py',191),
+  ('repeatImprovisation -> repeatValuesImprovisation','repeatImprovisation',1,'p_repeat2Improvisation','AnalizadorSintactico.py',195),
+  ('repeatValuesImprovisation -> ICONST LPAREN ICONST RPAREN','repeatValuesImprovisation',4,'p_repeatValuesImprovisation','AnalizadorSintactico.py',200),
 ]

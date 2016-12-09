@@ -621,10 +621,10 @@ def funcion(filen):
             x += 1
 
         x = 0
+        print(As.estructura3)
         for y in As.estructura1:
             for i in range(posiciones[y - 1], posiciones[y] - 1):
                 arregloGrados.append(As.grados[i])
-                arregloVelocidades.append(As.estructura2[x])
                 arregloVolumenes.append(As.estructura3[x])
             x += 1
 

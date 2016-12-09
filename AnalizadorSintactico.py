@@ -4,9 +4,10 @@
 # Analizador Sintactico compilador de generador de archivos midi
 # ----------------------------------------------------------------------
 
-import ply.yacc as yacc, sys
-
+import ply.yacc as yacc
 from AnalizadorLexico import tokens
+
+largoA = 0
 
 error = ""
 
@@ -34,7 +35,7 @@ estructura3 = []
 
 #Estructura principal del archivo
 def p_principal(t):
-    'principal : FILENAME SCONST AUTHOR SCONST INSTRUMENT ICONST song structure'
+    'principal : FILENAME SCONST AUTHOR SCONST INSTRUMENT ICONST song structureSong'
     global instrumento,titulo
     instrumento = t[6]
     titulo = t[2]
@@ -43,7 +44,7 @@ def p_principal(t):
     titulo = titulo.replace("\"", "")
 
 def p_principal2(t):
-    'principal : FILENAME SCONST AUTHOR SCONST INSTRUMENT ICONST improv structure'
+    'principal : FILENAME SCONST AUTHOR SCONST INSTRUMENT ICONST improv structureImprovisation'
     global instrumento,titulo
     instrumento = t[6]
     titulo = t[2]
@@ -156,38 +157,59 @@ def p_degrees2(t):
 
 #Grado musical
 def p_degree(t):
-    'degree : DCONST'
+    'degree : ICONST'
     degree = t[1]
     grados.append(int(degree[0]))
 
 #Estructura
-def p_structure(t):
-    'structure : STRUCTURE LBRACE repeat RBRACE'
+def p_structureSong(t):
+    'structureSong : STRUCTURE LBRACE repeatSong RBRACE'
+    pass
+
+def p_structureImprovisation(t):
+    'structureImprovisation : STRUCTURE LBRACE repeatImprovisation RBRACE'
     pass
 
 #Conjunto de valores a repetir
-def p_repeat(t):
-    'repeat : repeatValues COMMA repeat'
+def p_repeatSong(t):
+    'repeatSong : repeatValuesSong COMMA repeatSong'
     pass
 
-def p_repeat2(t):
-    'repeat : repeatValues'
+def p_repeat2Song(t):
+    'repeatSong : repeatValuesSong'
     pass
 
 #Valor a repetir
-def p_repeatValues(t):
-    'repeatValues : ICONST LPAREN ICONST COMMA ICONST RPAREN'
+def p_repeatValuesSong(t):
+    'repeatValuesSong : ICONST LPAREN ICONST COMMA ICONST RPAREN'
     estructura1.append(int(t[1]))
     estructura2.append(int(t[3]))
     estructura3.append(int(t[5]))
 
+#Conjunto de valores a repetir
+def p_repeatImprovisation(t):
+    'repeatImprovisation : repeatValuesImprovisation COMMA repeatImprovisation'
+    pass
+
+def p_repeat2Improvisation(t):
+    'repeatImprovisation : repeatValuesImprovisation'
+    pass
+
+#Valor a repetir
+def p_repeatValuesImprovisation(t):
+    'repeatValuesImprovisation : ICONST LPAREN ICONST RPAREN'
+    estructura1.append(int(t[1]))
+    estructura3.append(int(t[3]))
+
 def p_error(p):
     global error
-    error = " Sintactical Error: Illegal expression '%s'" % p.value
+    error = " Syntactic Error: Illegal expression '%s'" % p.value + " at line " + str(p.lineno - largoA)
+    print (error)
 
 def analisisSintactico(input):
 
-    global error,notas,ritmos,octavas,grados,valores,estructura1,estructura2,estructura3
+    global error,notas,ritmos,octavas,grados,valores,estructura1,estructura2,estructura3,largoA
+    largoA = input.count("\n")
     error = ""
     notas = []
     ritmos = []
