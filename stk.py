@@ -579,7 +579,7 @@ titulo = ""
 
 #main
 def funcion(filen):
-    global indice,count,titulo,arregloNotas,arregloOctavas,arregloRitmos,arregloVelocidades,arregloVolumenes,arregloGrados,mf
+    global indice,count,titulo,arregloNotas,arregloOctavas,arregloRitmos,arregloVelocidades,arregloVolumenes,arregloGrados,mf,arrNotas,arrRitmos,arrDuraciones
     indice = 0
     count = 0
     titulo = As.titulo
@@ -589,6 +589,9 @@ def funcion(filen):
     arregloVelocidades = []
     arregloVolumenes = []
     arregloGrados = []
+    arrNotas = []
+    arrRitmos = []
+    arrDuraciones = []
 
     mf = MIDIFile(1)
 
@@ -632,7 +635,6 @@ def funcion(filen):
             x += 1
 
         x = 0
-        print(As.estructura3)
         for y in As.estructura1:
             for i in range(posiciones[y - 1], posiciones[y] - 1):
                 arregloGrados.append(As.grados[i])
@@ -642,13 +644,12 @@ def funcion(filen):
         mf.addTrackName(track, count, "Sample Track")
         mf.addTempo(track, 0, 80)
 
-        print(arregloGrados,arregloVolumenes)
         for i in range(0,len(arregloGrados),2):
             indice = i
             improvisation(As.tonalidad,arregloGrados[i],arregloGrados[i+1])
 
         try:
-            with open(filen, 'wb+') as outf:
+            with open(filen, 'wb') as outf:
                 mf.writeFile(outf)
             return 0
         except:
