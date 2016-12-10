@@ -1,0 +1,7 @@
+filename "melodia"
+author "Yohel"
+instrument 43
+improvisation(Dm):
+1 6[1]
+1 5[2]
+structure {2(90), 1(40), 2(100), 1(80)}
