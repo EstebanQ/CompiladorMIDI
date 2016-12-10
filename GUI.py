@@ -16,15 +16,18 @@ def new():
 
 #Metodo que abre un archivo preexistente
 def openf():
-    txt.delete('1.0', "end-1c")
     filen = filedialog.askopenfilename()
-    file = open(filen)
-    input = file.readlines()
-    for line in input:
-        txt.insert("end-1c",line)
-    global filename
-    filename = filen
-    filemenu.entryconfig(2, state="normal")
+    try:
+        file = open(filen)
+        txt.delete('1.0', "end-1c")
+        input = file.readlines()
+        for line in input:
+            txt.insert("end-1c",line)
+        global filename
+        filename = filen
+        filemenu.entryconfig(2, state="normal")
+    except:
+        return
 
 #Metodo que guarda un archivo con su nombre
 def save():
@@ -55,8 +58,11 @@ def midi():
         error = AnalizadorSintactico.analisisSintactico(txt.get('1.0', "end-1c"))
         if error == "":
             filen = filedialog.asksaveasfilename(initialfile = AnalizadorSintactico.titulo,filetypes = [("Midi files", "*.mid")],defaultextension = '.mid')
-            stk.funcion(filen)
-            tki.messagebox._show("Success","Midi generated.")
+            res = stk.funcion(filen)
+            if res == 0:
+                tki.messagebox._show("Success","Midi generated.")
+            else:
+                tki.messagebox._show("Error", "File not created.")
             return
         else:
             tki.messagebox._show("Syntactic error", error)

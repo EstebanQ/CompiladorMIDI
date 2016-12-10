@@ -259,7 +259,6 @@ def llenar(arrNotas,arrRitmos,arrDuraciones):
     for elemento in arrNotas:
         volume = arregloVolumenes[indice] #volumen del midi
         #tempo = arregloVelocidades[indice] #velocidad
-        print(tempo)
         mf.addProgramChange(track, channel, arrRitmos[i], int(As.instrumento))
         #mf.addTempo(track, arrRitmos[i], tempo)
         mf.addNote(track, channel, arrNotas[i], arrRitmos[i], arrDuraciones[i], volume)
@@ -616,8 +615,12 @@ def funcion(filen):
 
         song(arregloNotas,arregloRitmos,arregloOctavas)
 
-        with open(filen, 'wb') as outf:
-            mf.writeFile(outf)
+        try:
+            with open(filen, 'wb') as outf:
+                mf.writeFile(outf)
+            return 0
+        except:
+            -1
 
     else:
         # Se acomodan todos los valores en un solo arreglo de cada tipo(arreglo de notas, octavas, ritmos, etc.)
@@ -639,9 +642,14 @@ def funcion(filen):
         mf.addTrackName(track, count, "Sample Track")
         mf.addTempo(track, 0, 80)
 
+        print(arregloGrados,arregloVolumenes)
         for i in range(0,len(arregloGrados),2):
             indice = i
             improvisation(As.tonalidad,arregloGrados[i],arregloGrados[i+1])
 
-        with open(filen, 'wb') as outf:
-            mf.writeFile(outf)
+        try:
+            with open(filen, 'wb+') as outf:
+                mf.writeFile(outf)
+            return 0
+        except:
+            -1
